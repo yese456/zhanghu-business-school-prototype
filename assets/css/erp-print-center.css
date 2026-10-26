@@ -1,0 +1,17 @@
+/* 仅打印中心；真实浏览器长列设置超高修复，不影响其他模块。 */
+.print-center-replica { min-width: 0; max-width: 100%; }
+.print-center-replica .el-form { display:flex; flex-wrap:wrap; gap:0 20px; margin-top:10px; }
+.print-center-replica .el-form-item { min-width:0; max-width:100%; margin-right:0; }
+.print-center-replica .el-form-item__content { min-width:0; max-width:100%; }
+.print-center-replica .el-date-editor { max-width:100%; }
+.print-center-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:10px 0; }
+.print-center-toolbar > .el-button:last-child { margin-left:auto; }
+.print-center-replica .el-pagination { max-width:100%; overflow-x:auto; justify-content:flex-end; padding:12px 0; }
+.print-center-replica details { overflow-wrap:anywhere; }
+.el-dialog.print-center-columns { margin-top:8vh; max-height:84vh; max-width:calc(100vw - 24px); display:flex; flex-direction:column; }
+.print-center-columns .el-dialog__header,.print-center-columns .el-dialog__footer { flex-shrink:0; }
+.print-center-columns .el-dialog__body { overflow:auto; min-height:0; }
+.print-center-columns .el-dialog__body > div > div { min-width:0; overflow-wrap:anywhere; }
+.print-center-columns .el-checkbox { height:auto; min-height:28px; max-width:100%; }
+.print-center-columns .el-checkbox__label { white-space:normal; }
+@media(max-width:600px) { .print-center-replica .el-form-item { width:100%; } .print-center-replica .el-pagination { justify-content:flex-start; } }

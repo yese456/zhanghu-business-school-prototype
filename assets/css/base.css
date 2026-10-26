@@ -1,0 +1,107 @@
+/* ============================================================
+   aicard 原型共享层 · Element Plus 基线 + 三系统令牌
+   ============================================================ */
+
+:root {
+  --font-sans: "PingFang SC", "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Arial, sans-serif;
+  --font-num: "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
+
+  /* 系统 A · 客户后台 */
+  --a-side: #344058;
+  --a-side-active: #2a3446;
+  --a-side-text: #c3ccdd;
+  --a-side-hover: #3b4862;
+  --a-bg: #eef3fa;
+  --a-primary: #409eff;
+
+  /* 系统 B · 订货管理 */
+  --b-side: #ffffff;
+  --b-primary: #4981ff;
+  --b-primary-soft: #edf2ff;
+  --b-border: #e4e7ed;
+  --b-text: #303133;
+  --b-text-2: #606266;
+  --b-text-3: #909399;
+  --b-bg: #f5f7fa;
+
+  /* 系统 C · 官网 */
+  --c-dark: #2b313c;
+  --c-accent: #e2874f;
+  --c-text: #1f2329;
+  --c-text-2: #6b7280;
+  --c-bg: #f5f5f5;
+  --c-border: #e6e6e6;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--b-text);
+  background: var(--b-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+/* Element Plus 密度覆盖：贴近真实后台的紧凑度 */
+.el-icon { width: 1em; height: 1em; }
+.el-icon svg { width: 1em; height: 1em; }
+.el-button { font-weight: 400; }
+.el-button--small { height: 30px; padding: 0 12px; }
+.el-input__wrapper, .el-select__wrapper { box-shadow: 0 0 0 1px var(--b-border) inset; }
+.el-table { font-size: 13px; }
+.el-table th.el-table__cell { background: #f7f8fa; color: #4b5563; font-weight: 500; }
+.el-table .cell { line-height: 1.5; }
+.el-dialog { border-radius: 6px; }
+.el-dialog__header { margin-right: 0; border-bottom: 1px solid var(--b-border); padding-bottom: 14px; }
+.el-drawer__header { margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--b-border); color: #303133; font-weight: 600; }
+.el-tag { border-radius: 2px; }
+
+/* 通用：数字用等宽表格数字 */
+.num, .kpi-value, .money { font-variant-numeric: tabular-nums; }
+
+/* 状态点 */
+.dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+/* 空态 */
+.empty-box { padding: 64px 0; text-align: center; color: #a8abb2; font-size: 13px; }
+.empty-box .icon { font-size: 28px; display: block; margin-bottom: 10px; opacity: .5; }
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #d4d7de; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #bcc0c9; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* 演示模式标注 */
+.demo-on [data-demo] { position: relative; }
+.demo-on [data-demo]::after {
+  content: attr(data-demo);
+  position: absolute; z-index: 30; top: -9px; left: 8px;
+  background: #409eff; color: #fff; font-size: 11px; line-height: 16px;
+  padding: 0 6px; border-radius: 2px; white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  font-family: var(--font-sans); font-weight: 400;
+}
+.demo-on [data-demo] { outline: 1px dashed #a8cdff; outline-offset: 2px; }
+.demo-toggle {
+  position: fixed; right: 18px; bottom: 18px; z-index: 1900;
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid #dcdfe6; border-radius: 20px;
+  padding: 7px 14px 7px 12px; font-size: 12px; color: #606266;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12); cursor: pointer; user-select: none;
+}
+.demo-toggle .sw { width: 30px; height: 16px; border-radius: 8px; background: #dcdfe6; position: relative; transition: .2s; }
+.demo-toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; transition: .2s; }
+.demo-toggle.on .sw { background: #409eff; }
+.demo-toggle.on .sw::after { left: 16px; }
+
+/* 页面切换动画 */
+.fade-enter-active { transition: opacity .18s ease; }
+.fade-enter-from { opacity: 0; }

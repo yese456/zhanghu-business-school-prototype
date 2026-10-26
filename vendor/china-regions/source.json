@@ -1,0 +1,19 @@
+{
+  "project": "https://github.com/modood/Administrative-divisions-of-China",
+  "commit": "dc3a1d7acd85ca1b0979543e9259604142c52e8e",
+  "license": "WTFPL-2.0",
+  "downloadedAt": "2026-10-22",
+  "files": {
+    "pca.json": {
+      "bytes": 47730,
+      "sha256": "4422a0976fbae5d9feb3f8edafa3eb4964489f8f5162d6ec5034ab3ab3f67649",
+      "url": "https://raw.githubusercontent.com/modood/Administrative-divisions-of-China/dc3a1d7acd85ca1b0979543e9259604142c52e8e/dist/pca.json"
+    },
+    "LICENSE": {
+      "bytes": 479,
+      "sha256": "ee820ff0db4ce628569e0975ac27dc926052a9f85d102b101edb104311ef4d90",
+      "url": "https://raw.githubusercontent.com/modood/Administrative-divisions-of-China/dc3a1d7acd85ca1b0979543e9259604142c52e8e/LICENSE"
+    }
+  },
+  "scope": "本地演示省市区数据，非原站行政区代码合同"
+}
