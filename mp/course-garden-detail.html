@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 学习园地详情</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --teal:#00b8a9; --teal-d:#009e91; --field:#f4f5f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);display:flex;justify-content:center;padding:24px 12px;-webkit-font-smoothing:antialiased}
+  .phone{width:390px;max-width:100%;background:#fff;min-height:780px;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(20,30,60,.18);display:flex;flex-direction:column;position:relative}
+  /* 状态栏 */
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:13px;font-weight:600;color:var(--ink)}
+  .statusbar .right{display:flex;align-items:center;gap:6px}
+  .signal{display:flex;gap:2px;align-items:flex-end;height:11px}
+  .signal i{width:3px;background:var(--ink);border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px;display:flex;align-items:center;padding:0 12px;position:relative;border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px;color:var(--ink);width:34px;line-height:1;cursor:pointer;position:relative;z-index:2}
+  .navbar .title{position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:var(--ink)}
+  .navbar .capsule{margin-left:auto;display:flex;align-items:center;gap:5px;border:1px solid #e3e6ec;border-radius:16px;height:30px;padding:0 7px;background:#f7f8fa}
+  .navbar .capsule .dots{display:flex;gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 内容 */
+  .main{flex:1;background:#f7f7f7;overflow:auto;padding-bottom:24px}
+  /* 资料卡 */
+  .head{background:#fff;display:flex;gap:14px;padding:16px;border-bottom:1px solid var(--line)}
+  .head .cv{width:96px;height:96px;flex:none;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;text-align:center;padding:6px;line-height:1.3;background:linear-gradient(135deg,#2f6bff,#5b8bff)}
+  .head .hinfo{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .head .ht{font-size:17px;font-weight:700;color:var(--ink);line-height:1.4}
+  .head .hs{margin-top:8px;font-size:13px;color:var(--sub)}
+  /* Tabs */
+  .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;padding:13px 16px;font-size:14px;color:var(--sub);position:relative;cursor:pointer;white-space:nowrap}
+  .tab.on{color:var(--teal);font-weight:600}
+  .tab.on:after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:3px;background:var(--teal);border-radius:2px}
+  .pane{display:none;padding:16px}
+  .pane.on{display:block}
+  /* 区块 */
+  .sec-h{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .sec-bar{width:4px;height:16px;background:var(--teal);border-radius:2px}
+  .sec-title{font-size:15px;font-weight:700;color:var(--ink)}
+  .video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(135deg,#3a4a66,#5d6f8c)}
+  .video .shelf{position:absolute;left:8%;right:8%;bottom:14%;height:30%;background:linear-gradient(180deg,#7c879c,#5d6678);border-radius:4px;box-shadow:0 8px 14px rgba(20,30,50,.3)}
+  .video .tv{position:absolute;left:14%;top:22%;width:26%;height:34%;background:#1f2738;border-radius:4px;border:2px solid #0d1320}
+  .video .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(20,30,60,.3)}
+  .video .play:before{content:"";width:0;height:0;border-left:16px solid var(--teal);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+  .photo{width:100%;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .photo .ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#f0f1f4,#f0f1f4 10px,#fff 10px,#fff 20px);display:flex;align-items:center;justify-content:center}
+  .photo .ph .seal{width:120px;height:120px;border-radius:50%;border:3px solid #222;display:flex;align-items:center;justify-content:center;transform:rotate(-12deg)}
+  .photo .ph .seal .s{font-size:30px;font-weight:700;color:#222;letter-spacing:4px}
+  .ph-note{margin-top:10px;padding:6px 12px;background:var(--field);border-radius:8px;color:var(--sub);font-size:12px;text-align:center}
+  .empty{padding:30px 0;text-align:center;color:#b6bcc7;font-size:13px}
+  /* Toast */
+  .toast{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.96);background:rgba(20,24,35,.86);color:#fff;font-size:13px;padding:10px 16px;border-radius:10px;z-index:30;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease;text-align:center;max-width:80%}
+  .toast.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="title">产品资料详情</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <!-- 资料卡 -->
+      <div class="head">
+        <div class="cv">世界睡眠日<br>义诊进行时</div>
+        <div class="hinfo">
+          <div class="ht">终端导购学习课件</div>
+          <div class="hs">零售学院</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" id="tabs">
+        <div class="tab on" data-pane="cfg" onclick="switchTab('cfg')">产品配置</div>
+        <div class="tab" data-pane="manual" onclick="switchTab('manual')">产品手册</div>
+        <div class="tab" data-pane="measure" onclick="switchTab('measure')">下单测量手册</div>
+        <div class="tab" data-pane="price" onclick="switchTab('price')">价格表</div>
+        <div class="tab" data-pane="upgrade" onclick="switchTab('upgrade')">升级信息</div>
+      </div>
+
+      <!-- 产品配置 -->
+      <div class="pane on" id="pane-cfg">
+        <div class="sec-h"><span class="sec-bar"></span><span class="sec-title">视频</span></div>
+        <div class="video" onclick="toast('（原型）播放视频')">
+          <div class="shelf"></div><div class="tv"></div><div class="play"></div>
+        </div>
+        <div class="sec-h" style="margin-top:18px"><span class="sec-bar"></span><span class="sec-title">图片</span></div>
+        <div class="photo">
+          <div class="ph"><div class="seal"><span class="s">测试</span></div></div>
+          <div class="ph-note">图片内容（原型占位）</div>
+        </div>
+      </div>
+
+      <!-- 其他 Tab 占位 -->
+      <div class="pane" id="pane-manual"><div class="empty">产品手册（原型占位）</div></div>
+      <div class="pane" id="pane-measure"><div class="empty">下单测量手册（原型占位）</div></div>
+      <div class="pane" id="pane-price"><div class="empty">价格表（原型占位）</div></div>
+      <div class="pane" id="pane-upgrade"><div class="empty">升级信息（原型占位）</div></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  function goBack(){ location.href='course-garden.html'; }
+  function switchTab(p){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('on', t.dataset.pane===p); });
+    ['cfg','manual','measure','price','upgrade'].forEach(function(k){
+      document.getElementById('pane-'+k).classList.toggle('on', k===p);
+    });
+  }
+  var toastTimer;
+  function toast(msg){
+    var t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ t.classList.remove('show'); },1800);
+  }
+</script>
+</body>
+</html>

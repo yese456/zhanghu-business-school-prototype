@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh-CN" data-page-node-id="4WYG9lJMuF5aCOfRO49jXw">
+<head data-page-node-id="AN74kUbPuRNe6XD3Xxibvs">
+  <meta charset="UTF-8" data-page-node-id="vfymPQC2KIN25H48xoqArC" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="NLU8ghDHEdI9NgkwOjG6NU" />
+  <title>掌狐后台 · 商学院（课程管理 / 课程分类）</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.14.7/dist/index.css" data-page-node-id="FxS5XatsTNX0rVA58iBDeG" />
+  <style>
+    :root{
+      --page-bg:#f2f3f5;
+      --surface1:#ffffff;
+      --border:#e4e7ed;
+      --text1:#303133;
+      --text2:#606266;
+      --text3:#909399;
+      --accent:#409eff;
+      --warning:#e6a23c;
+      --warning-bg:#fdf6ec;
+      --success:#67c23a;
+      --error:#f56c6c;
+      --radius-control:4px;
+      --radius-container:4px;
+    }
+    html,body{margin:0}
+    body{
+      background:var(--page-bg);color:var(--text1);font-size:14px;line-height:1.5;
+      font-family:Inter,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    #app{min-height:100vh}
+    .el-header{
+      height:56px;line-height:56px;padding:0 20px;background:var(--surface1);
+      border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+    }
+    .brand{font-size:16px;font-weight:600}
+    .brand span{color:var(--text3);font-weight:400;margin-left:8px;font-size:13px}
+    .who{color:var(--text2);font-size:13px}
+    .el-aside{background:var(--surface1);border-right:1px solid var(--border)}
+    .el-main{padding:20px}
+    .page-head{margin-bottom:16px}
+    .page-head h2{font-size:20px;font-weight:600;margin:0 0 4px}
+    .page-head p{margin:0;color:var(--text3);font-size:13px}
+    .panel{background:var(--surface1);border:1px solid var(--border);border-radius:var(--radius-container);padding:16px;margin-bottom:16px}
+    .toolbar{margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .toolbar .grow{flex:1}
+    .query-form{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+    .query-form .el-form-item{margin-bottom:0}
+    .tag-col{display:flex;flex-wrap:wrap;gap:4px}
+    .pin-badge{
+      display:inline-block;background:var(--warning-bg);color:var(--warning);
+      border:1px solid #faecd8;border-radius:2px;padding:0 5px;font-size:12px;
+      line-height:18px;margin-right:6px;
+    }
+    .cat-name{font-weight:500}
+    .sub-cat{color:var(--text2)}
+    .ops a{color:var(--accent);text-decoration:none;margin-right:12px;cursor:pointer}
+    .ops a:hover{text-decoration:underline}
+    .ops a.danger{color:var(--error)}
+    .ops a.pin{color:var(--warning)}
+    .ops a.unpin{color:var(--text3)}
+    .stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+    .stat{
+      flex:1;min-width:150px;background:var(--surface1);border:1px solid var(--border);
+      border-radius:var(--radius-container);padding:14px 16px;
+    }
+    .stat .k{color:var(--text3);font-size:12px}
+    .stat .v{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
+    .muted{color:var(--text3)}
+  </style>
+</head>
+<body data-page-node-id="nJxet77Sd0TAvmPJ5Dnzuu">
+<div id="app" data-page-node-id="uFaVvn9nlDirBM2bHqRMTF">
+  <el-container data-page-node-id="IJDiEee99XDYEj2myYHU8m">
+    <el-header data-page-node-id="aX9dZ9ESQ5eJq2JRrcNA5M">
+      <div class="brand" data-page-node-id="rdAgU1Dcxz5XhfD1WeV8e5">掌狐后台 <span data-page-node-id="rjUQqCNRqcALj7zsCFErXP">商学院</span></div>
+      <div class="who" data-page-node-id="cjN4TvHeJDkbKs199yITHN">管理员 · Eric</div>
+    </el-header>
+    <el-container data-page-node-id="pqECEEm63xLV5We5lDFPwa">
+      <el-aside width="200px" data-page-node-id="Kec2Yi4K0ImAl4ewafUn4e">
+        <el-menu :default-active="page" @select="p = data-page-node-id="yUh3pHVGTOMNvFRBOSX2aM"> page = p" style="border-right:none">
+          <el-sub-menu index="bs" data-page-node-id="aksAvkfXQt9PXHotPRDaRr">
+            <template #title data-page-node-id="xOAd05b2KFcsvABjTSHB6G"><span data-page-node-id="RRsViJH6Ot1enUQ5NE2ptE">商学院</span></template>
+            <el-menu-item index="course" data-page-node-id="9iq0WzWKloZiLGwLNuNiOJ">课程管理</el-menu-item>
+            <el-menu-item index="sort" data-page-node-id="UUDinFzG8Pv3XFEUixmNWp">课程分类</el-menu-item>
+          </el-sub-menu>
+        </el-menu>
+      </el-aside>
+      <el-main data-page-node-id="ogFZCCT8iSUBVCMe7dPUXI">
+        <el-breadcrumb separator="/" style="margin-bottom:12px" data-page-node-id="Bnqfwnxp7lUfFDHlm7xmHH">
+          <el-breadcrumb-item data-page-node-id="8mJAl5e0CmXBoCj1jBfBAj">首页</el-breadcrumb-item>
+          <el-breadcrumb-item data-page-node-id="3wE3KELW8X0aVWdAZcs9Gl">商学院</el-breadcrumb-item>
+          <el-breadcrumb-item data-page-node-id="PE9hiXHGRCnVi8D2s1O76F">{{ page === 'course' ? '课程管理' : '课程分类' }}</el-breadcrumb-item>
+        </el-breadcrumb>
+
+        <div class="page-head" v-if="page === 'course'" data-page-node-id="tIGiaZdGbqtB5FQDcZTzgM">
+          <h2 data-page-node-id="4ksv4QdSUmQS0syWUlYVy9">课程管理</h2>
+          <p data-page-node-id="e4fYKICf7agj7yqjbguGBB">共 {{ courses.length }} 门课程 · 支持一门课程挂载多个课程分类</p>
+        </div>
+        <div class="page-head" v-else data-page-node-id="9Hu2hUpVMsDywUnmLLwmQU">
+          <h2 data-page-node-id="i78ZjbEgRLDmoZEaeEmIsw">课程分类</h2>
+          <p data-page-node-id="yyodWR7HkmRa5YCTxHhLm4">一级分类对应小程序左侧菜单，二级栏目对应小程序顶部筛选</p>
+        </div>
+
+        <!-- ===== 课程管理 ===== -->
+        <template v-if="page === 'course'" data-page-node-id="5GberiZpCm40QsGMZSMkxD">
+          <div class="panel" data-page-node-id="LFsqLBBC1u7uWNKIgeQ38A">
+            <el-form class="query-form" :model="query" label-width="0" data-page-node-id="C3OlPpME66gJ70OjStFss3">
+              <el-form-item data-page-node-id="dHRUiUBounqxC3g87bRhIT">
+                <el-input v-model="query.name" placeholder="输入课程名称" clearable style="width:200px" data-page-node-id="cikcvF2XNmBA0ZmqDpxo0b"></el-input>
+              </el-form-item>
+              <el-form-item data-page-node-id="naO40WHj7JexTbwh4cqFXd">
+                <el-select v-model="query.type" placeholder="课程类型" clearable style="width:140px" data-page-node-id="wpoiVrmm9PyflsyD6tdoEg">
+                  <el-option label="章节课" value="章节课" data-page-node-id="bKV11Gvv3HVl0UXeyXdePt"></el-option>
+                  <el-option label="常规课" value="常规课" data-page-node-id="dr1D2G1v7IPpkOthnxLSSb"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item data-page-node-id="oOZfh20ImTrCrfFisQSQYD">
+                <el-select v-model="query.col" placeholder="课程分类" clearable style="width:140px" data-page-node-id="rPjuqmTLmFaOT59ysNHXQx">
+                  <el-option v-for="c in allCats" :key="c" :label="c" :value="c" data-page-node-id="GLoODh8fHiDYZNrKEsWAEF"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item data-page-node-id="9IecLRrGa0ZWplp98sEoQF">
+                <el-select v-model="query.must" placeholder="是否必修" clearable style="width:140px" data-page-node-id="WUftj25cWk5ns025kJ5RIo">
+                  <el-option label="必修" value="1" data-page-node-id="Ta1GfdJ3fruYhVLCxSDRGB"></el-option>
+                  <el-option label="选修" value="0" data-page-node-id="sHuFEv6N0MFHEQH6MgrTWL"></el-option>
+              </el-form-item>
+              <el-form-item data-page-node-id="8EDblUg4U66iyXEpMrRJyU">
+                <el-button type="primary" @click="search" data-page-node-id="KhGTnVLp94bs6afN9rilLy">搜索</el-button>
+                <el-button @click="reset" data-page-node-id="lafdCzWLHCQzUPK64BWuzJ">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+
+          <div class="panel" data-page-node-id="WpCTLLeZ9wnyYBQjSysGXy">
+            <div class="toolbar" data-page-node-id="DJ3heVb3c0I8nGi1EoWNp3">
+              <el-button type="primary" @click="openCourse()" data-page-node-id="yJoqCnpAu5mSIbajy3LJAo"><span style="margin-right:4px" data-page-node-id="oZNuLigBw8SGd6HtwKnRiM">＋</span>开设常规课程</el-button>
+              <el-button @click="openCourse(null, '章节课')" data-page-node-id="6BDxkKcfPOcAsKuJgfiMML">开设章节课程</el-button>
+              <div class="grow" data-page-node-id="XqX4yGuQwiHNLcpJfDLGtq"></div>
+              <el-button :disabled="!selected.length" @click="batch('下架')" data-page-node-id="IWXpq1VjBhxFuHejd4U8y3">批量下架</el-button>
+            </div>
+            <el-table :data="pagedCourses" row-key="id" @selection-change="s = data-page-node-id="FwKq4uReNkO3ASOxc5m8c8"> selected = s" style="width:100%">
+              <el-table-column type="selection" width="46" data-page-node-id="AZhyu35EcEwEHWRI0bsFHx"></el-table-column>
+              <el-table-column prop="name" label="课程名称" min-width="180" data-page-node-id="EMVXpilaVlvCL3evcbQJEx"></el-table-column>
+              <el-table-column label="类型" width="90" data-page-node-id="XFZXeeT5nt8y0afrSSDBgM">
+                <template #default="{ row }" data-page-node-id="KHCnGpQClAFgMYrLj2AUmY"><el-tag size="small" :type="row.type === '章节课' ? '' : 'info'" data-page-node-id="aYoCrfbq7J2gz9ajJATldc">{{ row.type }}</el-tag></template>
+              </el-table-column>
+              <el-table-column label="课程分类" min-width="200" data-page-node-id="VXfBx862GmC4yXu0OMbzt1">
+                <template #default="{ row }" data-page-node-id="JrHpOoGPUaIMMoJg9oJjGd">
+                  <div class="tag-col" data-page-node-id="0PL6IMXtAtJDhg5hmAXyES">
+                    <el-tag v-for="c in catTags(row)" :key="c" size="small" type="info" effect="plain" data-page-node-id="gMXIZeckblvz6cFDeYrGwM">{{ c }}</el-tag>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="lessons" label="课时" width="80" sortable data-page-node-id="Z1j2C8s3rQAbsWWOVdF3hY"></el-table-column>
+              <el-table-column label="必修" width="80" data-page-node-id="I2sZQxLXNQu1etfU7zZ0MG">
+                <template #default="{ row }" data-page-node-id="2FStZ61FS9AOwKje0Zqi8h"><el-tag size="small" :type="row.must ? 'success' : 'info'" data-page-node-id="WEUMQmrW6SDxXfGoBwG3cA">{{ row.must ? '必修' : '选修' }}</el-tag></template>
+              </el-table-column>
+              <el-table-column prop="learners" label="学习人数" width="100" sortable data-page-node-id="MqApLDDPLVdaBNYwUq6Idv"></el-table-column>
+              <el-table-column label="状态" width="90" data-page-node-id="B2SgMpbOhn4DsLcx8yC1Il">
+                <template #default="{ row }" data-page-node-id="CXv6AWIJNtkEaEbqmYzzvH"><el-tag size="small" :type="row.status === '进行中' ? 'success' : 'info'" data-page-node-id="flii6pPEE2dIyCjRz6Q013">{{ row.status }}</el-tag></template>
+              </el-table-column>
+              <el-table-column prop="scope" label="适用范围" width="90" data-page-node-id="kcxZfvhhOn2Kw5JrswRGVZ"></el-table-column>
+              <el-table-column prop="createdAt" label="创建时间" width="140" data-page-node-id="2zatz4L99Y4DAA3IcrjPgQ"></el-table-column>
+              <el-table-column label="操作" width="200" fixed="right" data-page-node-id="mTHlToquBCMVk7BFO4HSPA">
+                <template #default="{ row }" data-page-node-id="evP5ESxRNtTDP0QjOhTKzP">
+                  <div class="ops" data-page-node-id="oU2ZXP1L2FPMvodARL4mHL">
+                    <a @click="openCourse(row)" data-page-node-id="oVx5dXfxYayEa93aVDpp0B">编辑</a>
+                    <a @click="notify(row)" data-page-node-id="H8z8ooBti981lWzPizq8P4">通知</a>
+                    <a :class="row.pinned ? 'unpin' : 'pin'" @click="toggleCoursePin(row)" data-page-node-id="o5JsqH1rNxX7iTqzf7rHgc">{{ row.pinned ? '取消置顶' : '置顶' }}</a>
+                    <a class="danger" @click="offline(row)" data-page-node-id="QGM57PBlNuh9fIRkMtCpYd">{{ row.status === '已下架' ? '上架' : '下架' }}</a>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div style="display:flex;justify-content:flex-end;margin-top:12px" data-page-node-id="q7YxXJdGICnlAx2ssCLhM5">
+              <el-pagination background layout="total, sizes, prev, pager, next" :total="filteredCourses.length"
+                v-model:current-page="page1" v-model:page-size="size1" :page-sizes="[10,20,50]" data-page-node-id="wCJ6gVMtwsPQLLf7DYkO6S"></el-pagination>
+            </div>
+          </div>
+        </template>
+
+        <!-- ===== 课程分类 ===== -->
+        <template v-else data-page-node-id="Xx7E4NdxW0GdE7XlBcecBn">
+          <div class="stat-row" data-page-node-id="OuS4yhOAT0Px68OabEvwCU">
+            <div class="stat" data-page-node-id="GBTS77PgBCrOS4sBXTxzUn"><div class="k" data-page-node-id="7iKBmsFvEBRtAmCeyHwUaW">一级分类</div><div class="v" data-page-node-id="QYaBdhHBW4cKdgSS7R6lPr">{{ cats.length }}</div></div>
+            <div class="stat" data-page-node-id="ZoYtCH0W6SqTAjjBHrTW8w"><div class="k" data-page-node-id="Y1EDbyuAV9YEhlVDpOaS3D">二级栏目</div><div class="v" data-page-node-id="KbNVxZcItF2Luw3pqcJA6U">{{ totalSubs }}</div></div>
+            <div class="stat" data-page-node-id="hXuWstA9qyClnR7fy495cA"><div class="k" data-page-node-id="UFqQydEv3EO5lynKvHm9Dp">关联课程数（含跨分类）</div><div class="v" data-page-node-id="zPvD1wE0S2wOpNaHHQOHtX">{{ crossCount }}</div></div>
+          </div>
+
+          <div class="panel" data-page-node-id="dfURCfatvXR8poWm9RzP9W">
+            <div class="toolbar" data-page-node-id="T5B1xw5NPHjo5ApJ5KF2l9">
+              <el-button type="primary" @click="openCat()" data-page-node-id="FUt2UGMCc06BevhGdpTtM7"><span style="margin-right:4px" data-page-node-id="P8S5qTWKdKktPG94Tbmpa3">＋</span>新建课程分类</el-button>
+              <div class="grow" data-page-node-id="dFlMZOlJUjdfvpEJTtc8kw"></div>
+              <span class="muted" data-page-node-id="cYXBMOvcN1MBBaQcRLsO0b">置顶后该一级分类优先展示在小程序左侧菜单顶部</span>
+            </div>
+            <el-table :data="sortedCats" row-key="name" style="width:100%" data-page-node-id="zlUdbelrDaTZPftakdaOh2">
+              <el-table-column label="课程分类" min-width="260" data-page-node-id="jYAabAHrypkvhxRMnmHQ5m">
+                <template #default="{ row }" data-page-node-id="DewrB9SmJUW3iwWA39N5yz">
+                  <span v-if="row.pinned" class="pin-badge" data-page-node-id="mfTr3zIqb91lX1XVr29kzk">置顶</span>
+                  <span class="cat-name" data-page-node-id="k6sFnRNNWcDeQVIZZ45dSs">{{ row.name }}</span>
+                  <span class="muted" style="margin-left:6px" data-page-node-id="ZFWS4bcfdxRLmjSFYNCQxV">（{{ row.subs.length }} 个栏目）</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="课程数量" width="100" data-page-node-id="4DE72QwqneuwIycSIFZf4g">
+                <template #default="{ row }" data-page-node-id="F57aFtKoZYlr8SdEWGAQt4">{{ catCourseCount(row) }}</template>
+              </el-table-column>
+              <el-table-column label="排序" width="110" data-page-node-id="A70zx4qc1vGJDepKGyJqR4">
+                <template #default="{ row }" data-page-node-id="SieTV2hdLKf0L4wxRZU7LW">
+                  <span v-if="row.pinned" style="color:var(--warning)" data-page-node-id="JMZ2lRCyCd6JmBPKzJC9R1">置顶优先</span>
+              <span v-else data-page-node-id="evv6WFKur4zVrt8g12HJQD">{{ row.sort }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="260" data-page-node-id="8xBXr9YGcjE2iH5zAcVNZq">
+                <template #default="{ row }" data-page-node-id="YaGwox8DVIPDl4GYX6wzce">
+                  <div class="ops" data-page-node-id="pP9N7BYTkT7hr89WOUiq84">
+                    <a @click="openSub(row)" data-page-node-id="Kqaeli2sizxkTb9T1EkL72">新增子分类</a>
+                    <a @click="openCat(row)" data-page-node-id="5BsItyWvkc7akcryMoGl8P">编辑</a>
+                    <a class="danger" @click="delCat(row)" data-page-node-id="Ilqd7uhG2pXj60wk2muDtS">删除</a>
+                    <a :class="row.pinned ? 'unpin' : 'pin'" @click="togglePin(row)" data-page-node-id="0M8VHaGEXe5MzDiNk4K1y8">{{ row.pinned ? '取消置顶' : '置顶' }}</a>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column type="expand" data-page-node-id="IE9RwxVTE1rcKNSDEoUQO9">
+                <template #default="{ row }" data-page-node-id="4VYsluLqEhsxH2on3KVHpu">
+                  <el-table :data="row.subs" row-key="name" size="small" style="width:100%" data-page-node-id="K6Q28sTxDUoQmhJ8vp3fSE">
+                    <el-table-column label="二级栏目" min-width="220" data-page-node-id="yh99IGC94mtsImg7GlBKaM">
+                      <template #default="{ row: sub }" data-page-node-id="DMmMRFG0rfTt9KAoBd11TG">
+                        <span class="sub-cat" data-page-node-id="bJSUTrCg7nACw3zvHp79yD">{{ sub.name }}</span>
+                        <el-tag v-if="isCross(row, sub)" size="small" type="warning" effect="plain" style="margin-left:6px" data-page-node-id="TWTsa9G5wrpZUUm0CbSsqz">跨栏目</el-tag>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="课程数量" width="100" data-page-node-id="S8HY9qPq6XZGC3mnZG2jdF">
+                      <template #default="{ row: sub }" data-page-node-id="0fTufhczE2uvapFDqBoU9r">{{ subCourseCount(row, sub) }}</template>
+                    </el-table-column>
+                    <el-table-column label="排序" width="90" data-page-node-id="w2dfKh899fJvcMNSZgg8Gc">
+                      <template #default="{ row: sub }" data-page-node-id="AjHX5GpOd03WKw1DGZ63rQ">{{ sub.sort }}</template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="160" data-page-node-id="hqrfYfeZLAuMTuv9YCaEh1">
+                      <template #default="{ row: sub }" data-page-node-id="NV5AjXOXw9fuBcwF9QYkcS">
+                        <div class="ops" data-page-node-id="kvo2RCQTvHsEo9fVGyrNsW">
+                          <a @click="openSub(row, sub)" data-page-node-id="CtYovtOxmUXU0iS65rVqve">编辑</a>
+                          <a class="danger" @click="delSub(row, sub)" data-page-node-id="n2oPKrjNQMkqKreYtVbMUR">删除</a>
+                        </div>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </template>
+
+        <!-- ===== 新建/编辑课程抽屉 ===== -->
+        <el-drawer v-model="drawer" :title="form.id ? '编辑课程' : '开设课程'" size="640px" :close-on-click-modal="false" data-page-node-id="z2cBlBwqdu7HZLlYTTCYlE">
+          <el-form :model="form" :rules="rules" ref="formRef" label-width="88px" data-page-node-id="Qs2X2tRFS7Zwu1puPuU2Z9">
+            <el-form-item label="课程名称" prop="name" data-page-node-id="cvhcSVWK60saLOsaQ4MPE4">
+              <el-input v-model="form.name" placeholder="请输入课程名称" maxlength="30" show-word-limit data-page-node-id="VuogXqhR4qnWkabpEBmLLa"></el-input>
+            </el-form-item>
+            <el-form-item label="课程类型" prop="type" data-page-node-id="rxW5PF3O59qGleJEDkbDK8">
+              <el-radio-group v-model="form.type" data-page-node-id="nBrm1myPRObz4C9hhClQxi">
+                <el-radio-button label="常规课" data-page-node-id="MSbZwf9GC78uEYZMHWv0Um"></el-radio-button>
+                <el-radio-button label="章节课" data-page-node-id="gEhrt2mF6xmAkeGTka2ERH"></el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="课程分类" prop="catsValue" data-page-node-id="h7Ek1IJiY8xIj2ADOAZMuA">
+              <el-select v-model="form.catsValue" multiple collapse-tags collapse-tags-tooltip filterable
+                placeholder="可选择多个课程分类" style="width:100%" data-page-node-id="hxP2236eHAfcW81r7Fv1Xg">
+                <el-option-group v-for="g in catOptions" :key="g.label" :label="g.label" data-page-node-id="uDZnDQTnGJj4eQuMP464rh">
+                  <el-option v-for="o in g.options" :key="o" :label="o" :value="o" data-page-node-id="S4xIiajQmAXeS0LRGiKTEY"></el-option>
+                </el-option-group>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="课时" data-page-node-id="jEMbvXfCew0cAYyyUe8RHn">
+              <el-input-number v-model="form.lessons" :min="1" :max="200" controls-position="right" data-page-node-id="Q4igYrmZacisFR7oh3DJvy"></el-input-number>
+            </el-form-item>
+            <el-form-item label="是否必修" data-page-node-id="rpoIJ0Dop5QsrIJVUdaRW5">
+              <el-switch v-model="form.must" data-page-node-id="ZMye4m4bRi63qTfbxdV3gO"></el-switch>
+            </el-form-item>
+            <el-form-item label="讲师" data-page-node-id="ym5pvkj531D0U3bjAfYrIZ">
+              <el-input v-model="form.teacher" placeholder="请输入讲师名称" data-page-node-id="D0aNu7FkmArjBD1BAtduFP"></el-input>
+            </el-form-item>
+            <el-form-item label="适用范围" data-page-node-id="h3H032l1vUguxTxJrrp1c0">
+              <el-radio-group v-model="form.scope" data-page-node-id="iUKjFOFBktTuzOCX7x6RDT">
+                <el-radio-button label="专用" data-page-node-id="sCYuzPeHEmEmy6lHu4Q6Lr"></el-radio-button>
+                <el-radio-button label="通用" data-page-node-id="nPwFlo9rw85pDfdjBdmg07"></el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="课程简介" data-page-node-id="LoDI38q7qQhk0uAnYRWgvW">
+              <el-input v-model="form.desc" type="textarea" :rows="3" maxlength="200" show-word-limit placeholder="一句话描述课程价值" data-page-node-id="bO1XHsyMd4v6jSqZymtyvv"></el-input>
+            </el-form-item>
+          </el-form>
+          <template #footer data-page-node-id="ZNxsrB4fRJQ3yvL5SXwha0">
+            <el-button @click="drawer = false" data-page-node-id="gM5BWRCGwUFVmfF627Hku2">取消</el-button>
+            <el-button type="primary" @click="submit" data-page-node-id="mxhWq2dayFFXIjlhQuQETz">保存</el-button>
+          </template>
+        </el-drawer>
+
+        <!-- ===== 新建课程分类弹窗 ===== -->
+        <el-dialog v-model="catDialog" :title="catForm.id ? '编辑课程分类' : '新建课程分类'" width="520px" :close-on-click-modal="false" data-page-node-id="mMGfvyfbXzZyaVd9lFCJRG">
+          <el-form :model="catForm" :rules="catRules" ref="catFormRef" label-width="88px" data-page-node-id="HdnOKclSrHrMInNItKOAnh">
+            <el-form-item label="分类名称" prop="name" data-page-node-id="CRUAe8aZAohQjy61cr9zUy">
+              <el-input v-model="catForm.name" placeholder="如：新人培训、产品学习" maxlength="12" show-word-limit data-page-node-id="A0vV9K1LydaCAlYAwQAM99"></el-input>
+            </el-form-item>
+            <el-form-item label="上级分类" prop="parent" data-page-node-id="Ne62hbSTvQngv8vkfm2DE1">
+              <el-select v-model="catForm.parent" placeholder="留空则为一级分类" clearable style="width:100%" data-page-node-id="izFzdhWiG5LqY1BqlhhaAp">
+                <el-option v-for="c in cats" :key="c.name" :label="c.name" :value="c.name" data-page-node-id="lzQRbqmpd49B9T0wB9dtsF"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="排序" prop="sort" data-page-node-id="geKSFQ4i2unJENHC1kVKtJ">
+              <el-input-number v-model="catForm.sort" :min="0" :max="999" controls-position="right" data-page-node-id="6xxQOeV5Pjeh6jQvkoyuxH"></el-input-number>
+            </el-form-item>
+            <el-form-item label="是否置顶" data-page-node-id="qzBpU7zZbiAvZchfopCKuC">
+              <el-switch v-model="catForm.pinned" :disabled="!!catForm.parent" data-page-node-id="VqLkOBh14PPwqAQI5DW0YV"></el-switch>
+              <span class="muted" style="margin-left:8px" data-page-node-id="CBVlhrJaAkSqQVox7ytCbo">仅一级分类支持置顶</span>
+            </el-form-item>
+            <el-form-item label="备注" data-page-node-id="bU9MNiqDZLv17JH0tLWLxc">
+              <el-input v-model="catForm.note" type="textarea" :rows="2" maxlength="100" show-word-limit placeholder="选填，说明该分类用途" data-page-node-id="sv5tmP93zXSsoAWUA4EWbc"></el-input>
+            </el-form-item>
+          </el-form>
+          <template #footer data-page-node-id="B8QFHI1zJ1NpEgKFrZmlB3">
+            <el-button @click="catDialog = false" data-page-node-id="R0vJO3cJd9Pr787zc3KbDJ">取消</el-button>
+            <el-button type="primary" @click="submitCat" data-page-node-id="S6q40x0CWOGogRVbtsDJ9I">保存</el-button>
+          </template>
+        </el-dialog>
+      </el-main>
+    </el-container>
+  </el-container>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-plus@2.14.7/dist/index.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-plus@2.14.7/dist/locale/zh-cn.min.js"></script>
+<script>
+const { createApp, ref, reactive, computed } = Vue;
+const ElMessage = ElementPlus.ElMessage;
+const ElMessageBox = ElementPlus.ElMessageBox;
+
+createApp({
+  setup(){
+    const page = ref("course");
+    const drawer = ref(false);
+    const catDialog = ref(false);
+    const selected = ref([]);
+    const formRef = ref(null);
+    const catFormRef = ref(null);
+
+    // 一级分类（小程序左侧菜单）+ 二级栏目（小程序顶部筛选）
+    const cats = reactive([
+      {id:1, name:"新人培训", sort:1, pinned:false, subs:[{name:"综合", sort:0}]},
+      {id:2, name:"产品学习", sort:2, pinned:false, subs:[{name:"沙发", sort:0},{name:"床", sort:0},{name:"床垫", sort:0},{name:"柜类", sort:0},{name:"桌椅", sort:0}]},
+      {id:3, name:"技能提升", sort:3, pinned:false, subs:[{name:"综合", sort:0},{name:"沙发", sort:0}]},
+      {id:4, name:"销售话术", sort:4, pinned:false, subs:[{name:"沙发", sort:0},{name:"综合", sort:0}]},
+      {id:5, name:"数据资料", sort:5, pinned:false, subs:[{name:"综合", sort:0}]}
+    ]);
+
+    // 课程数据：cat = 主分类（一级），cols = 可同时归属的多个栏目（二级）
+    const courses = reactive([
+      {id:1,  name:"产品基础篇",        type:"常规课", cat:"新人培训", cols:["综合"],        lessons:6,  must:true,  learners:128, status:"进行中", scope:"专用", teacher:"张敏", createdAt:"2025-04-28 13:32"},
+      {id:2,  name:"企业文化与品牌故事", type:"常规课", cat:"新人培训", cols:["综合"],        lessons:4,  must:true,  learners:96,  status:"进行中", scope:"通用", teacher:"李伟", createdAt:"2025-04-28 13:30"},
+      {id:3,  name:"新员工入职指引",     type:"章节课", cat:"新人培训", cols:["综合"],        lessons:8,  must:false, learners:64,  status:"进行中", scope:"专用", teacher:"陈静", createdAt:"2025-05-06 09:12"},
+      {id:4,  name:"沙发结构与卖点",     type:"章节课", cat:"产品学习", cols:["沙发"],        lessons:8,  must:true,  learners:212, status:"进行中", scope:"专用", teacher:"王强", createdAt:"2025-04-28 13:32"},
+      {id:5,  name:"皮沙发工艺与保养",   type:"常规课", cat:"产品学习", cols:["沙发"],        lessons:5,  must:false, learners:87,  status:"进行中", scope:"通用", teacher:"周涛", createdAt:"2025-05-11 10:04"},
+      {id:6,  name:"布艺沙发卖点解析",   type:"章节课", cat:"产品学习", cols:["沙发"],        lessons:7,  must:true,  learners:143, status:"进行中", scope:"专用", teacher:"王强", createdAt:"2025-05-14 15:41"},
+      {id:7,  name:"功能沙发与电动位",   type:"常规课", cat:"产品学习", cols:["沙发","综合"], lessons:6,  must:false, learners:58,  status:"进行中", scope:"通用", teacher:"刘洋", createdAt:"2025-05-19 11:20"},
+      {id:8,  name:"软床产品知识",       type:"章节课", cat:"产品学习", cols:["床"],          lessons:9,  must:true,  learners:134, status:"进行中", scope:"专用", teacher:"赵磊", createdAt:"2025-05-22 14:08"},
+      {id:9,  name:"床垫选购指南",       type:"常规课", cat:"产品学习", cols:["床垫"],        lessons:5,  must:false, learners:176, status:"进行中", scope:"通用", teacher:"孙丽", createdAt:"2025-06-02 09:55"},
+      {id:10, name:"全屋柜类定制",       type:"章节课", cat:"产品学习", cols:["柜类","综合"], lessons:10, must:true,  learners:92,  status:"进行中", scope:"专用", teacher:"吴刚", createdAt:"2025-06-05 16:30"},
+      {id:11, name:"餐桌椅搭配",         type:"常规课", cat:"产品学习", cols:["桌椅"],        lessons:4,  must:false, learners:71,  status:"进行中", scope:"通用", teacher:"孙丽", createdAt:"2025-06-09 10:18"},
+      {id:12, name:"艾绿版面搭建",       type:"章节课", cat:"技能提升", cols:["综合"],        lessons:12, must:true,  learners:45,  status:"进行中", scope:"专用", teacher:"郑凯", createdAt:"2025-06-15 13:47"},
+      {id:13, name:"终端导购学习课件",    type:"常规课", cat:"技能提升", cols:["综合"],        lessons:6,  must:true,  learners:118, status:"进行中", scope:"通用", teacher:"林娜", createdAt:"2025-06-18 11:02"},
+      {id:14, name:"量尺与方案设计",     type:"章节课", cat:"技能提升", cols:["综合"],        lessons:8,  must:false, learners:63,  status:"进行中", scope:"专用", teacher:"吴刚", createdAt:"2025-06-21 09:31"},
+      {id:15, name:"沙发场景搭配技巧",    type:"常规课", cat:"技能提升", cols:["沙发","综合"], lessons:5,  must:false, learners:52,  status:"进行中", scope:"通用", teacher:"郑凯", createdAt:"2025-06-24 15:09"},
+      {id:16, name:"沙发接待话术",       type:"章节课", cat:"销售话术", cols:["沙发"],        lessons:6,  must:true,  learners:158, status:"进行中", scope:"专用", teacher:"林娜", createdAt:"2025-06-27 10:44"},
+      {id:17, name:"高端沙发成交话术",   type:"常规课", cat:"销售话术", cols:["沙发"],        lessons:7,  must:false, learners:84,  status:"进行中", scope:"通用", teacher:"周涛", createdAt:"2025-07-01 14:26"},
+      {id:18, name:"客户异议处理",       type:"章节课", cat:"销售话术", cols:["综合"],        lessons:9,  must:true,  learners:167, status:"进行中", scope:"专用", teacher:"李伟", createdAt:"2025-07-04 09:50"},
+      {id:19, name:"逼单与成交技巧",     type:"常规课", cat:"销售话术", cols:["综合"],        lessons:5,  must:false, learners:103, status:"进行中", scope:"通用", teacher:"张敏", createdAt:"2025-07-08 16:12"},
+      {id:20, name:"行业数据分析",       type:"常规课", cat:"数据资料", cols:["综合"],        lessons:6,  must:false, learners:39,  status:"进行中", scope:"专用", teacher:"刘洋", createdAt:"2025-07-12 11:35"},
+      {id:21, name:"门店报表解读",       type:"章节课", cat:"数据资料", cols:["综合"],        lessons:7,  must:false, learners:28,  status:"进行中", scope:"专用", teacher:"孙丽", createdAt:"2025-07-16 10:07"},
+      {id:22, name:"竞品对比资料包",     type:"常规课", cat:"数据资料", cols:["综合"],        lessons:4,  must:false, learners:66,  status:"进行中", scope:"通用", teacher:"赵磊", createdAt:"2025-07-20 17:03"}
+    ]);
+
+    const CATS = cats.map(c => c.name);
+    const COLS = ["沙发","床","床垫","柜类","桌椅","综合"];
+    const allCats = CATS.concat(COLS);
+    const catOptions = [
+      {label:"一级分类", options:CATS},
+      {label:"二级栏目", options:COLS}
+    ];
+
+    const query = reactive({name:"", type:"", col:"", must:""});
+    const applied = reactive({name:"", type:"", col:"", must:""});
+    const page1 = ref(1), size1 = ref(10);
+
+    const filteredCourses = computed(() => courses.filter(function(c){
+      if(applied.name && c.name.indexOf(applied.name) === -1) return false;
+      if(applied.type && c.type !== applied.type) return false;
+      if(applied.col && c.cat !== applied.col && c.cols.indexOf(applied.col) === -1) return false;
+      if(applied.must === "1" && !c.must) return false;
+      if(applied.must === "0" && c.must) return false;
+      return true;
+    }));
+    const pagedCourses = computed(() => filteredCourses.value.slice((page1.value - 1) * size1.value, page1.value * size1.value));
+
+    function search(){ Object.assign(applied, query); page1.value = 1; ElMessage.success("已筛选，共 " + filteredCourses.value.length + " 门课程"); }
+    function reset(){ Object.keys(query).forEach(k => query[k] = ""); Object.assign(applied, query); page1.value = 1; }
+
+    // ===== 课程表单 =====
+    function blankCourse(){ return {id:null, name:"", type:"常规课", cat:"", cols:[], catsValue:[], lessons:1, must:false, learners:0, status:"进行中", scope:"专用", teacher:"", createdAt:"", desc:""}; }
+    const form = reactive(blankCourse());
+    const rules = {
+      name:[{required:true, message:"请输入课程名称", trigger:"blur"}],
+      catsValue:[{required:true, message:"请至少选择一个课程分类", trigger:"change"}]
+    };
+    // 表格里展示的课程分类标签 = 一级分类 + 多个二级栏目
+    function catTags(row){
+      return row.cat ? [row.cat].concat(row.cols.filter(c => c !== row.cat)) : row.cols.slice();
+    }
+    function openCourse(row, type){
+      Object.assign(form, row ? JSON.parse(JSON.stringify(row)) : blankCourse());
+      if(!row && type) form.type = type;
+      form.catsValue = catTags(form);
+      drawer.value = true;
+    }
+    function submit(){
+      formRef.value.validate(ok => {
+        if(!ok) return;
+        if(form.id){
+          const i = courses.findIndex(c => c.id === form.id);
+          courses.splice(i, 1, Object.assign({}, form));
+          ElMessage.success("课程「" + form.name + "」已保存");
+        }else{
+          const now = new Date(), pad = n => String(n).padStart(2, "0");
+          form.id = courses.length ? Math.max.apply(null, courses.map(c => c.id)) + 1 : 1;
+          form.createdAt = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) + " " + pad(now.getHours()) + ":" + pad(now.getMinutes());
+          // 多选值回写：第一个一级分类作为主分类，其余归为二级栏目
+          form.cat = (form.catsValue.filter(x => CATS.indexOf(x) > -1)[0]) || "";
+          form.cols = form.catsValue.filter(x => COLS.indexOf(x) > -1);
+          courses.unshift(Object.assign({}, form));
+          ElMessage.success("课程「" + form.name + "」已创建，已同步至小程序");
+        }
+        drawer.value = false;
+      });
+    }
+    function notify(row){ ElMessage.success("已向学习「" + row.name + "」的学员推送通知"); }
+    function toggleCoursePin(row){
+      row.pinned = !row.pinned;
+      const i = courses.findIndex(c => c.id === row.id);
+      courses.unshift(courses.splice(i, 1)[0]);
+      ElMessage.success(row.pinned ? "已置顶「" + row.name + "」" : "已取消置顶「" + row.name + "」");
+    }
+    function offline(row){
+      row.status = row.status === "进行中" ? "已下架" : "进行中";
+      ElMessage.success("「" + row.name + "」已" + (row.status === "已下架" ? "下架" : "上架"));
+    }
+    function batch(){
+      selected.value.forEach(r => { r.status = "已下架"; });
+      ElMessage.success("已批量下架 " + selected.value.length + " 门课程");
+      selected.value = [];
+    }
+
+    // ===== 分类 =====
+    const sortedCats = computed(() => cats.slice().sort(function(a,b){
+      if(a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+      if(a.pinned && b.pinned) return (a.pinOrder||0) - (b.pinOrder||0);
+      return a.sort - b.sort;
+    }));
+    const totalSubs = computed(() => cats.reduce((a,c) => a + c.subs.length, 0));
+    const crossCount = computed(() => courses.reduce((a,c) => a + catTags(c).length, 0));
+    function catCourseCount(row){ return courses.filter(c => c.cat === row.name).length; }
+    function subCourseCount(row, sub){ return courses.filter(c => c.cat === row.name && c.cols.indexOf(sub.name) > -1).length; }
+    function isCross(row, sub){ return courses.some(c => c.cat === row.name && c.cols.indexOf(sub.name) > -1 && c.cols.length > 1); }
+
+    let pinSeq = 0;
+    function togglePin(row){
+      row.pinned = !row.pinned;
+      if(row.pinned) row.pinOrder = ++pinSeq;
+      ElMessage.success(row.pinned ? "已置顶「" + row.name + "」" : "已取消置顶「" + row.name + "」");
+      if(row.pinned){
+        cats.sort(function(a,b){
+          if(a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+          if(a.pinned && b.pinned) return (a.pinOrder||0) - (b.pinOrder||0);
+          return a.sort - b.sort;
+        });
+      }
+    }
+
+    // 新建 / 编辑分类弹窗
+    const catForm = reactive({id:null, name:"", parent:"", sort:0, pinned:false, note:""});
+    const catRules = {
+      name:[{required:true, message:"请输入分类名称", trigger:"blur"}]
+    };
+    function openCat(row){
+      catForm.id = row ? row.id : null;
+      catForm.name = row ? row.name : "";
+      catForm.parent = "";
+      catForm.sort = row ? row.sort : cats.length + 1;
+      catForm.pinned = row ? !!row.pinned : false;
+      catForm.note = "";
+      catDialog.value = true;
+    }
+    function openSub(parent, sub){
+      catForm.id = null;
+      catForm.name = sub ? sub.name : "";
+      catForm.parent = parent.name;
+      catForm.sort = sub ? sub.sort : parent.subs.length;
+      catForm.pinned = false;
+      catForm.note = "";
+      catDialog.value = true;
+    }
+    function submitCat(){
+      catFormRef.value.validate(function(ok){
+        if(!ok) return;
+        if(catForm.parent){
+          const p = cats.find(c => c.name === catForm.parent);
+          const exist = p.subs.find(s => s.name === catForm.name);
+          if(exist) exist.sort = catForm.sort;
+          else p.subs.push({name:catForm.name, sort:catForm.sort});
+          ElMessage.success("二级栏目「" + catForm.name + "」已保存");
+        }else if(catForm.id){
+          const row = cats.find(c => c.id === catForm.id);
+          row.name = catForm.name; row.sort = catForm.sort; row.pinned = catForm.pinned;
+          if(row.pinned && !row.pinOrder) row.pinOrder = ++pinSeq;
+          ElMessage.success("一级分类「" + catForm.name + "」已保存");
+        }else{
+          cats.push({id: Date.now(), name:catForm.name, sort:catForm.sort, pinned:catForm.pinned, subs:[]});
+          ElMessage.success("一级分类「" + catForm.name + "」已创建");
+        }
+        catDialog.value = false;
+      });
+    }
+    function delCat(row){
+      ElMessageBox.confirm("删除一级分类「" + row.name + "」后其下二级栏目一并删除，已挂载课程不受影响。确认删除？", "删除确认", {type:"warning"})
+        .then(function(){
+          const i = cats.findIndex(c => c.name === row.name);
+          cats.splice(i, 1);
+          ElMessage.success("已删除「" + row.name + "」");
+        }).catch(function(){});
+    }
+    function delSub(parent, sub){
+      ElMessageBox.confirm("确定删除二级栏目「" + sub.name + "」？", "删除确认", {type:"warning"})
+        .then(function(){
+          const p = cats.find(c => c.name === parent.name);
+          p.subs = p.subs.filter(x => x.name !== sub.name);
+          ElMessage.success("已删除「" + sub.name + "」");
+        }).catch(function(){});
+    }
+
+    return {
+      page, drawer, catDialog, selected, formRef, catFormRef,
+      cats, courses, allCats, catOptions,
+      query, page1, size1, filteredCourses, pagedCourses, search, reset,
+      form, rules, catTags, openCourse, submit, notify, toggleCoursePin, offline, batch,
+      sortedCats, totalSubs, crossCount, catCourseCount, subCourseCount, isCross,
+      togglePin, delCat, catForm, catRules, openCat, openSub, submitCat, delSub
+    };
+  }
+}).use(ElementPlus, { locale: ElementPlusLocaleZhCn }).mount('#app');
+</script>
+</body>
+</html>

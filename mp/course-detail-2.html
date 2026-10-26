@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 课程详情（丰富版）</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --blue:#2f6bff; --blue-d:#2456d6; --field:#f4f5f8;
+    --cyan:#13b5a6; --orange:#ff7a3c; --green:#1faa6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:var(--bg); display:flex; justify-content:center; padding:24px 12px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .phone{
+    width:390px; max-width:100%; background:#fff; min-height:780px;
+    border-radius:30px; overflow:hidden; box-shadow:0 24px 60px rgba(20,30,60,.18);
+    display:flex; flex-direction:column; position:relative;
+  }
+  /* 状态栏 */
+  .statusbar{height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; font-size:13px; font-weight:600; color:var(--ink)}
+  .statusbar .right{display:flex; align-items:center; gap:6px}
+  .signal{display:flex; gap:2px; align-items:flex-end; height:11px}
+  .signal i{width:3px; background:var(--ink); border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px; display:flex; align-items:center; padding:0 12px; position:relative; border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px; color:var(--ink); width:34px; line-height:1; cursor:pointer; position:relative; z-index:2}
+  .navbar .title{position:absolute; left:0; right:0; text-align:center; font-size:17px; font-weight:600; color:var(--ink)}
+  .navbar .capsule{margin-left:auto; display:flex; align-items:center; gap:5px; border:1px solid #e3e6ec; border-radius:16px; height:30px; padding:0 7px; background:#f7f8fa}
+  .navbar .capsule .dots{display:flex; gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 滚动内容 */
+  .main{flex:1; background:#f6f7fb; overflow:auto; padding-bottom:84px}
+  /* 封面 */
+  .cover{position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; cursor:pointer;
+    background:linear-gradient(135deg,#2f6bff 0%,#5b8bff 60%,#7aa0ff 100%)}
+  .cover .c1,.cover .c2{position:absolute; border-radius:50%; background:rgba(255,255,255,.14)}
+  .cover .c1{width:140px;height:140px; right:-30px; top:-30px}
+  .cover .c2{width:90px;height:90px; left:-20px; bottom:-20px; background:rgba(255,255,255,.1)}
+  .cover .book{position:absolute; left:50%; top:46%; transform:translate(-50%,-55%); font-size:60px; filter:drop-shadow(0 6px 14px rgba(20,40,90,.3))}
+  .cover .ctitle{position:absolute; left:16px; bottom:34px; color:#fff; font-size:20px; font-weight:700; text-shadow:0 2px 8px rgba(10,30,70,.35)}
+  .cover .brand{position:absolute; right:14px; bottom:12px; color:rgba(255,255,255,.85); font-size:11px}
+  .play{position:absolute; left:50%; top:46%; transform:translate(-50%,-55%); width:54px; height:54px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(20,30,60,.28)}
+  .play:before{content:""; width:0; height:0; border-left:17px solid var(--blue); border-top:10px solid transparent; border-bottom:10px solid transparent; margin-left:5px}
+  /* 课程信息 */
+  .info{background:#fff; padding:16px 16px 14px}
+  .info h1{font-size:17px; font-weight:700; color:var(--ink); line-height:1.4}
+  .info .meta{margin-top:10px; display:flex; align-items:center; justify-content:space-between}
+  .info .meta .left{font-size:13px; color:var(--sub)}
+  .info .meta .right{font-size:13px; color:var(--blue); display:flex; align-items:center; gap:3px; cursor:pointer}
+  .info .teacher{margin-top:12px; display:flex; align-items:center; gap:9px}
+  .info .teacher .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#6d4ed6,#9b6bff);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:600}
+  .info .teacher .tn{font-size:13px;color:var(--ink)}
+  /* 区块标题 */
+  .sec{margin-top:12px; background:#fff; padding:4px 16px 14px}
+  .sec-head{display:flex; align-items:center; gap:8px; padding:14px 0 10px}
+  .sec-bar{width:4px; height:16px; background:var(--cyan); border-radius:2px}
+  .sec-title{font-size:15px; font-weight:700; color:var(--ink)}
+  .sec-more{margin-left:auto; font-size:12px; color:var(--sub); display:flex; align-items:center; gap:2px; cursor:pointer}
+  /* 章节卡片横向滚动 */
+  .chapters{display:flex; gap:12px; overflow-x:auto; padding-bottom:4px}
+  .chapters::-webkit-scrollbar{display:none}
+  .ch{position:relative; flex:none; width:200px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 12px 12px; cursor:pointer}
+  .ch.on{border:2px solid var(--cyan); background:#f4fdfb}
+  .ch .v{position:absolute; right:9px; top:9px; font-size:12px; color:var(--sub)}
+  .ch .tag{display:inline-block; font-size:11px; color:var(--orange); border:1px solid var(--orange); border-radius:4px; padding:1px 6px; margin-bottom:8px}
+  .ch .ct{font-size:13px; color:var(--ink); line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+  .ch .lock{margin-top:8px; font-size:12px; color:var(--sub); display:flex; align-items:center; gap:4px}
+  /* 章节介绍 */
+  .intro{padding:12px 0 2px}
+  .intro .ih{font-size:14px; font-weight:600; color:var(--ink); margin-bottom:6px}
+  .intro .ip{font-size:13px; color:var(--sub); line-height:1.6}
+  /* 资料 */
+  .file-row{display:flex; align-items:center; gap:11px; padding:12px; background:var(--field); border-radius:10px; margin-top:10px; cursor:pointer}
+  .file-row .fx{width:34px;height:34px;flex:none;border-radius:8px;background:rgba(31,170,107,.12);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+  .file-row .fn{flex:1; font-size:13px; color:var(--ink)}
+  .file-row .fs{font-size:12px; color:var(--sub)}
+  /* 底部操作栏 */
+  .actionbar{position:absolute; left:0; right:0; bottom:0; height:72px; background:#fff; border-top:1px solid var(--line); display:flex; align-items:center; gap:12px; padding:0 16px; box-shadow:0 -4px 16px rgba(20,30,60,.05)}
+  .btn-down{flex:1; height:46px; border:none; border-radius:12px; cursor:pointer; background:linear-gradient(135deg,var(--blue),#5b8bff); color:#fff; font-size:16px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:0 8px 18px rgba(47,107,255,.28); transition:transform .12s ease}
+  .btn-down:active{transform:scale(.985)}
+  .btn-down .ico{font-size:17px}
+  /* 下载弹层 */
+  .mask{position:absolute; inset:0; background:rgba(15,20,35,.45); opacity:0; visibility:hidden; transition:opacity .22s ease; z-index:20}
+  .mask.show{opacity:1; visibility:visible}
+  .sheet{position:absolute; left:0; right:0; bottom:0; background:#fff; z-index:21; border-radius:20px 20px 0 0; padding:10px 18px calc(22px + env(safe-area-inset-bottom)); transform:translateY(100%); transition:transform .26s cubic-bezier(.22,.61,.36,1)}
+  .sheet.show{transform:translateY(0)}
+  .sheet .handle{width:38px; height:4px; background:#e2e5ea; border-radius:3px; margin:6px auto 14px}
+  .sheet h3{font-size:16px; font-weight:700; color:var(--ink); text-align:center}
+  .sheet .tip{margin-top:8px; font-size:13px; color:var(--sub); line-height:1.6; text-align:center}
+  .sheet .tip b{color:var(--blue); font-weight:600}
+  .files{margin-top:16px; display:flex; flex-direction:column; gap:12px}
+  .file{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--line); border-radius:12px; background:#fbfcfe}
+  .file .fi{width:42px; height:42px; flex:none; border-radius:10px; background:var(--field); display:flex; align-items:center; justify-content:center; font-size:20px}
+  .file .fcol{flex:1; min-width:0}
+  .file .fname{font-size:13px; font-weight:600; color:var(--ink)}
+  .file .furl{margin-top:4px; font-size:11.5px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .file .copy{border:none; flex:none; height:34px; padding:0 14px; border-radius:9px; background:var(--blue); color:#fff; font-size:13px; font-weight:600; cursor:pointer}
+  .file .copy:active{background:var(--blue-d)}
+  .sheet .done{margin-top:18px; height:46px; border:none; border-radius:12px; background:#f1f3f7; color:var(--sub); font-size:15px; font-weight:600; width:100%; cursor:pointer}
+  /* Toast */
+  .toast{position:absolute; left:50%; top:42%; transform:translate(-50%,-50%) scale(.96); background:rgba(20,24,35,.86); color:#fff; font-size:13px; padding:10px 16px; border-radius:10px; z-index:30; opacity:0; visibility:hidden; transition:opacity .2s ease, transform .2s ease; text-align:center; max-width:80%}
+  .toast.show{opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="title">课程详情</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <!-- 封面 / 视频入口 -->
+      <div class="cover" onclick="playVideo()">
+        <div class="c1"></div><div class="c2"></div>
+        <div class="book">📖</div>
+        <div class="play"></div>
+        <div class="ctitle">企业文化认知篇</div>
+        <div class="brand">培训部出品</div>
+      </div>
+
+      <!-- 课程信息 -->
+      <div class="info">
+        <h1>1.1《中国室内家具发展历史与生活方式变化》</h1>
+        <div class="meta">
+          <div class="left">1人在学</div>
+          <div class="right" onclick="toast('（原型）查看完成条件')">📝完成条件 <span>›</span></div>
+        </div>
+        <div class="teacher">
+          <div class="av">潘</div>
+          <div class="tn">博森斯商学院-潘老师</div>
+        </div>
+      </div>
+
+      <!-- 章节目录 -->
+      <div class="sec">
+        <div class="sec-head">
+          <span class="sec-bar"></span>
+          <span class="sec-title">产品基础篇</span>
+          <span class="sec-more" onclick="location.href='course-chapter.html'">课程目录 ›</span>
+        </div>
+        <div class="chapters">
+          <div class="ch on">
+            <span class="v">∨</span>
+            <span class="tag">必修</span>
+            <div class="ct">《中国室内家具发展历史与生活方式变化》</div>
+          </div>
+          <div class="ch">
+            <span class="v">∨</span>
+            <div class="ct">《博森斯的品牌故事与文化内核》</div>
+            <div class="lock">🔒 未解锁</div>
+          </div>
+          <div class="ch">
+            <span class="v">∨</span>
+            <div class="ct">《沙发生产工艺与质量识别》</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 章节介绍 -->
+      <div class="sec">
+        <div class="intro">
+          <div class="ih">章节介绍</div>
+          <div class="ip">家具发展史、家居行业变化</div>
+        </div>
+      </div>
+
+      <!-- 资料 -->
+      <div class="sec">
+        <div class="sec-head">
+          <span class="sec-bar"></span>
+          <span class="sec-title">资料（1）</span>
+        </div>
+        <div class="file-row" onclick="openSheet()">
+          <div class="fx">X</div>
+          <div class="fn">掌狐系统展会落地指导书.xlsx</div>
+          <div class="fs">Excel</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部操作栏：下载按钮 -->
+    <div class="actionbar">
+      <button class="btn-down" onclick="openSheet()"><span class="ico">⬇</span>下载课程资料</button>
+    </div>
+
+    <!-- 下载弹层 -->
+    <div class="mask" id="mask" onclick="closeSheet()"></div>
+    <div class="sheet" id="sheet">
+      <div class="handle"></div>
+      <h3>保存到手机相册</h3>
+      <p class="tip">点击「下载」即可将课程<b>视频与资料</b>保存到手机。<br>视频与图片将存入<b>手机相册</b>。</p>
+      <div class="files" id="files"></div>
+      <button class="done" onclick="closeSheet()">完成</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  function goBack(){ location.href='course-chapter.html'; }
+  // 课程可下载的媒体与资料文件（原型占位链接，真实环境替换为 CDN 地址）
+  var COURSE_FILES = [
+    { type:'video', name:'课程视频',   url:'https://cdn.zhanghu.com/course/qywh/lecture.mp4' },
+    { type:'file',  name:'掌狐系统展会落地指导书.xlsx', url:'https://cdn.zhanghu.com/course/qywh/掌狐系统展会落地指导书.xlsx' }
+  ];
+
+  function renderFiles(){
+    var box = document.getElementById('files');
+    box.innerHTML = COURSE_FILES.map(function(f){
+      var icon = f.type === 'video' ? '🎬' : (f.type === 'file' ? '📎' : '🖼️');
+      return ''
+        + '<div class="file">'
+        +   '<div class="fi">'+icon+'</div>'
+        +   '<div class="fcol">'
+        +     '<div class="fname">'+f.name+'</div>'
+        +     '<div class="furl" title="'+f.url+'">'+f.url+'</div>'
+        +   '</div>'
+        +   '<button class="copy" onclick="downloadFile(\''+f.type+'\',\''+f.url+'\')">下载</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  function openSheet(){ renderFiles(); document.getElementById('mask').classList.add('show'); document.getElementById('sheet').classList.add('show'); }
+  function closeSheet(){ document.getElementById('mask').classList.remove('show'); document.getElementById('sheet').classList.remove('show'); }
+
+  function downloadFile(type, url){
+    // 原型模拟保存：真实小程序用 wx.saveImageToPhotosAlbum / wx.saveVideoToPhotosAlbum
+    if(type === 'video' || type === 'image'){
+      toast('已保存到手机相册中');
+    } else {
+      toast('文件已保存至手机');
+    }
+  }
+
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  }
+
+  function playVideo(){ toast('（原型）开始播放课程视频'); }
+</script>
+</body>
+</html>

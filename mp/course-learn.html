@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 我的学习</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --orange:#ff7a3c; --blue:#2f6bff; --field:#f4f5f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);display:flex;justify-content:center;padding:24px 12px;-webkit-font-smoothing:antialiased}
+  .phone{width:390px;max-width:100%;background:#fff;min-height:780px;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(20,30,60,.18);display:flex;flex-direction:column;position:relative}
+  /* 状态栏 */
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:13px;font-weight:600;color:var(--ink)}
+  .statusbar .right{display:flex;align-items:center;gap:6px}
+  .signal{display:flex;gap:2px;align-items:flex-end;height:11px}
+  .signal i{width:3px;background:var(--ink);border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px;display:flex;align-items:center;padding:0 12px;position:relative;border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px;color:var(--ink);width:34px;line-height:1;cursor:pointer;position:relative;z-index:2}
+  .navbar .title{position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:var(--ink)}
+  .navbar .capsule{margin-left:auto;display:flex;align-items:center;gap:5px;border:1px solid #e3e6ec;border-radius:16px;height:30px;padding:0 7px;background:#f7f8fa}
+  .navbar .capsule .dots{display:flex;gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 内容 */
+  .main{flex:1;background:#f6f7fb;overflow:auto;padding-bottom:24px}
+  /* Tabs */
+  .tabs{display:flex;background:#fff;border-bottom:1px solid var(--line)}
+  .tab{flex:1;text-align:center;padding:14px 0;font-size:15px;color:var(--sub);position:relative;cursor:pointer}
+  .tab.on{color:var(--orange);font-weight:600}
+  .tab.on:after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:36px;height:3px;background:var(--orange);border-radius:2px}
+  .pane{display:none;padding:14px 16px}
+  .pane.on{display:block}
+  /* 课程卡片 */
+  .ccard{display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:12px;cursor:pointer;box-shadow:0 4px 14px rgba(40,50,90,.06)}
+  .ccard:active{background:#f7f8fa}
+  .ccard .cv{width:96px;height:64px;flex:none;border-radius:10px;overflow:hidden;position:relative;
+    background:radial-gradient(120% 80% at 20% 0%,#c9d3e6 0%,transparent 60%),radial-gradient(120% 90% at 90% 20%,#b9c4d8 0%,transparent 55%),linear-gradient(135deg,#aeb9cf,#cfd6e3)}
+  .ccard .cv .wb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.92);border-radius:6px;padding:4px 9px;text-align:center;box-shadow:0 4px 10px rgba(20,30,60,.18)}
+  .ccard .cv .wb .cn{font-size:11px;font-weight:700;color:#2b3242;letter-spacing:1px}
+  .ccard .cv .wb .en{font-size:7px;letter-spacing:1px;color:#6b7382;margin-top:1px}
+  .ccard .cinfo{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .ccard .ct{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+  .ccard .cp{margin-top:8px;font-size:12px;color:var(--sub)}
+  .ccard .bar{margin-top:8px;height:5px;border-radius:3px;background:var(--field);overflow:hidden}
+  .ccard .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#5b8bff);border-radius:3px}
+  /* 成就 */
+  .ach{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-top:6px}
+  .badge{background:#fff;border-radius:14px;padding:16px 8px;text-align:center;box-shadow:0 4px 14px rgba(40,50,90,.06)}
+  .badge .emoji{font-size:30px}
+  .badge .bn{margin-top:8px;font-size:12px;color:var(--ink);font-weight:600}
+  .badge .bd{margin-top:2px;font-size:11px;color:var(--sub)}
+  /* 结尾 */
+  .more{margin-top:14px;text-align:center;font-size:12px;color:#b6bcc7;display:flex;align-items:center;justify-content:center;gap:10px}
+  .more:before,.more:after{content:"";width:30px;height:1px;background:#e3e6ec}
+  /* Toast */
+  .toast{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.96);background:rgba(20,24,35,.86);color:#fff;font-size:13px;padding:10px 16px;border-radius:10px;z-index:30;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease;text-align:center;max-width:80%}
+  .toast.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="title">我的学习</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <div class="tabs">
+        <div class="tab on" data-pane="done" onclick="switchTab('done')">完成的课程</div>
+        <div class="tab" data-pane="ach" onclick="switchTab('ach')">我的学习成就</div>
+      </div>
+
+      <!-- 完成的课程 -->
+      <div class="pane on" id="pane-done">
+        <div class="ccard" onclick="location.href='course-detail.html?from=learn'">
+          <div class="cv"><div class="wb"><div class="cn">课程</div><div class="en">LEARNING</div></div></div>
+          <div class="cinfo">
+            <div class="ct">掌狐3+N数字营销系统操作文档</div>
+            <div class="cp">已学习 1/51 节</div>
+            <div class="bar"><i style="width:2%"></i></div>
+          </div>
+        </div>
+        <div class="ccard" onclick="location.href='course-detail.html?from=learn'">
+          <div class="cv"><div class="wb"><div class="cn">课程</div><div class="en">LEARNING</div></div></div>
+          <div class="cinfo">
+            <div class="ct">门店销售话术与接待礼仪</div>
+            <div class="cp">已学习 12/20 节</div>
+            <div class="bar"><i style="width:60%"></i></div>
+          </div>
+        </div>
+        <div class="ccard" onclick="location.href='course-detail.html?from=learn'">
+          <div class="cv"><div class="wb"><div class="cn">课程</div><div class="en">LEARNING</div></div></div>
+          <div class="cinfo">
+            <div class="ct">沙发生产工艺与质量识别</div>
+            <div class="cp">已学习 8/8 节 · 已完成</div>
+            <div class="bar"><i style="width:100%"></i></div>
+          </div>
+        </div>
+        <div class="more">没有更多了</div>
+      </div>
+
+      <!-- 我的学习成就 -->
+      <div class="pane" id="pane-ach">
+        <div class="ach">
+          <div class="badge"><div class="emoji">🎓</div><div class="bn">新手上路</div><div class="bd">完成首课</div></div>
+          <div class="badge"><div class="emoji">🔥</div><div class="bn">坚持7天</div><div class="bd">连续学习</div></div>
+          <div class="badge"><div class="emoji">📚</div><div class="bn">博览群书</div><div class="bd">学完10门</div></div>
+          <div class="badge"><div class="emoji">⭐</div><div class="bn">满分学员</div><div class="bd">考试100</div></div>
+          <div class="badge"><div class="emoji">🏆</div><div class="bn">季度冠军</div><div class="bd">排行榜1</div></div>
+          <div class="badge"><div class="emoji">💡</div><div class="bn">分享达人</div><div class="bd">分享5次</div></div>
+        </div>
+        <div class="more">成就持续解锁中</div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  function goBack(){ location.href='course-admin-home.html'; }
+  function switchTab(p){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('on', t.dataset.pane===p); });
+    document.getElementById('pane-done').classList.toggle('on', p==='done');
+    document.getElementById('pane-ach').classList.toggle('on', p==='ach');
+  }
+  var toastTimer;
+  function toast(msg){
+    var t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ t.classList.remove('show'); },1800);
+  }
+</script>
+</body>
+</html>

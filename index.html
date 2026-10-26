@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>掌狐商学院 · 原型演示</title>
+<style>
+:root{
+  --blue:#1e80ff; --teal:#00b3a4; --ink:#1f2329; --sub:#6b7280;
+  --line:#e8e8e8; --bg:#f5f6f8; --card:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  background:var(--bg); color:var(--ink); min-height:100vh; padding:40px 20px;
+}
+.wrap{max-width:900px;margin:0 auto}
+.head{text-align:center;margin-bottom:32px}
+.head h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+.head p{margin-top:8px;font-size:14px;color:var(--sub);line-height:1.7}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.entry{
+  display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:24px;text-decoration:none;color:inherit;transition:.18s;
+}
+.entry:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08);border-color:transparent}
+.entry .badge{
+  display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;
+  color:#fff;font-weight:500;margin-bottom:12px;
+}
+.entry.mp .badge{background:linear-gradient(135deg,#3b82f6,#6366f1)}
+.entry.ad .badge{background:linear-gradient(135deg,#00b3a4,#0ea5e9)}
+.entry h2{font-size:19px;font-weight:600;margin-bottom:8px}
+.entry .desc{font-size:13px;color:var(--sub);line-height:1.7}
+.entry .meta{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:12px;color:var(--sub)}
+.entry .meta b{color:var(--ink);font-weight:600}
+.flow{
+  margin-top:28px;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:20px 24px;
+}
+.flow h3{font-size:15px;font-weight:600;margin-bottom:12px}
+.flow pre{
+  font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;line-height:1.9;
+  color:var(--sub);white-space:pre-wrap;word-break:break-all;
+}
+.foot{margin-top:24px;text-align:center;font-size:12px;color:var(--sub);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>掌狐商学院 · 原型演示</h1>
+    <p>课程学习、考试与资料一站式入口原型。含小程序学员端与后台管理端两套页面，可直接点击体验。</p>
+  </div>
+
+  <div class="grid">
+    <a class="entry mp" href="mp/index.html">
+      <span class="badge">小程序端</span>
+      <h2>学员端 · 商学院</h2>
+      <div class="desc">
+        学员视角的完整学习路径：商学院首页 → 我的课程（课程列表）→ 章节课 → 课程详情，
+        并含我的学习、我的考试、学习园地三大模块。
+      </div>
+      <div class="meta">共 <b>9</b> 个页面 · 建议用手机或窄窗口浏览</div>
+    </a>
+
+    <a class="entry ad" href="admin/index.html">
+      <span class="badge">后台管理端</span>
+      <h2>管理端 · 商学院配置</h2>
+      <div class="desc">
+        管理员视角的课程运营：课程管理、课程分类、开设常规课程、推荐位管理，
+        可从后台跳转查看小程序端效果。
+      </div>
+      <div class="meta">共 <b>4</b> 个页面 · 建议电脑全屏浏览</div>
+    </a>
+  </div>
+
+  <div class="flow">
+    <h3>推荐体验路径</h3>
+<pre>小程序端：商学院首页 → 我的课程（课程列表）→ 产品基础篇 → 课程详情
+                                          → 企业文化与品牌故事 → 章节课 → 课程详情
+          商学院首页 → 我的学习 / 我的考试 / 学习园地 → 学习园地详情
+
+后台端：  课程管理 → 开设常规课程 → 课程分类 → 推荐位管理 → 查看小程序课程</pre>
+  </div>
+
+  <div class="foot">
+    原型用于需求评审与方案确认，页面内数据均为演示占位内容。<br>
+    掌狐 · 商学院原型演示
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 学习园地</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --teal:#00b8a9; --teal-d:#009e91; --field:#f4f5f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);display:flex;justify-content:center;padding:24px 12px;-webkit-font-smoothing:antialiased}
+  .phone{width:390px;max-width:100%;background:#fff;min-height:780px;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(20,30,60,.18);display:flex;flex-direction:column;position:relative}
+  /* 状态栏 */
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:13px;font-weight:600;color:var(--ink)}
+  .statusbar .right{display:flex;align-items:center;gap:6px}
+  .signal{display:flex;gap:2px;align-items:flex-end;height:11px}
+  .signal i{width:3px;background:var(--ink);border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 顶栏：返回 + 搜索 + 胶囊 */
+  .topbar{height:48px;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid var(--line)}
+  .topbar .back{font-size:22px;color:var(--ink);width:30px;line-height:1;cursor:pointer;flex:none}
+  .search{flex:1;display:flex;align-items:center;gap:6px;background:#f1f2f5;border-radius:16px;height:32px;padding:0 12px;color:var(--sub);font-size:13px}
+  .search svg{width:15px;height:15px;flex:none}
+  .topbar .capsule{margin-left:auto;display:flex;align-items:center;gap:5px;border:1px solid #e3e6ec;border-radius:16px;height:30px;padding:0 7px;background:#f7f8fa;flex:none}
+  .topbar .capsule .dots{display:flex;gap:3px}
+  .topbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .topbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .topbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 主体：左分类 + 右列表 */
+  .body{flex:1;display:flex;overflow:hidden}
+  .side{width:104px;flex:none;background:#fff;border-right:1px solid var(--line);overflow:auto}
+  .side .cat{padding:15px 10px 15px 14px;font-size:13px;color:var(--sub);cursor:pointer;position:relative;line-height:1.3}
+  .side .cat.on{color:var(--teal);font-weight:600;background:#f3fbfa}
+  .side .cat.on:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;background:var(--teal);border-radius:2px}
+  .list{flex:1;background:#f5f5f5;overflow:auto;padding:12px}
+  .item{display:flex;gap:11px;background:#fff;border-radius:12px;padding:10px;margin-bottom:12px;cursor:pointer;box-shadow:0 3px 10px rgba(40,50,90,.05)}
+  .item:active{background:#f7f8fa}
+  .item .cv{width:62px;height:62px;flex:none;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:600;text-align:center;padding:4px;line-height:1.3}
+  .item .info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .item .t{font-size:14px;color:var(--ink);font-weight:500;line-height:1.4}
+  .item .tm{margin-top:8px;font-size:12px;color:var(--sub)}
+  .more{margin-top:4px;text-align:center;font-size:12px;color:#b6bcc7;display:flex;align-items:center;justify-content:center;gap:10px}
+  .more:before,.more:after{content:"";width:30px;height:1px;background:#e3e6ec}
+  /* Toast */
+  .toast{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.96);background:rgba(20,24,35,.86);color:#fff;font-size:13px;padding:10px 16px;border-radius:10px;z-index:30;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease;text-align:center;max-width:80%}
+  .toast.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="topbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        请输入关键词
+      </div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="body">
+      <div class="side" id="side"></div>
+      <div class="list" id="list"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  var CATS = ['全部','新人专区','品牌价值','主推爆款','零售学院','质量检测','客户服务','流量策划','产品大全','门店优秀案例','信息及AI工具'];
+  var ITEMS = [
+    {cat:'产品大全', title:'实木', time:'2026-09-02 13:24', cover:'#aeb9cf', label:'实木'},
+    {cat:'零售学院', title:'终端导购学习课件', time:'2026-05-21 10:13', cover:'#2f6bff', label:'课件'},
+    {cat:'新人专区', title:'新人入职学习指南', time:'2026-08-15 09:40', cover:'#00b8a9', label:'新人'},
+    {cat:'品牌价值', title:'品牌故事与价值主张', time:'2026-07-10 14:02', cover:'#6d4ed6', label:'品牌'},
+    {cat:'主推爆款', title:'爆款沙发卖点解析', time:'2026-06-20 11:30', cover:'#ff7a3c', label:'爆款'},
+    {cat:'门店优秀案例', title:'标杆门店陈列案例', time:'2026-05-30 16:18', cover:'#1faa6b', label:'案例'},
+    {cat:'质量检测', title:'软体家具质检标准', time:'2026-04-18 10:05', cover:'#13b5a6', label:'质检'}
+  ];
+  var cur = '全部';
+
+  function renderCats(){
+    document.getElementById('side').innerHTML = CATS.map(function(c){
+      return '<div class="cat'+(c===cur?' on':'')+'" onclick="pickCat(\''+c+'\')">'+c+'</div>';
+    }).join('');
+  }
+  function renderList(){
+    var arr = cur==='全部' ? ITEMS : ITEMS.filter(function(it){ return it.cat===cur; });
+    document.getElementById('list').innerHTML = arr.map(function(it){
+      return '<div class="item" onclick="location.href=\'course-garden-detail.html\'">'
+        + '<div class="cv" style="background:'+it.cover+'">'+it.label+'</div>'
+        + '<div class="info"><div class="t">'+it.title+'</div><div class="tm">'+it.time+'</div></div>'
+        + '</div>';
+    }).join('') + '<div class="more">没有更多了</div>';
+  }
+  function pickCat(c){ cur = c; renderCats(); renderList(); }
+  function goBack(){ location.href='course-admin-home.html'; }
+  var toastTimer;
+  function toast(msg){
+    var t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ t.classList.remove('show'); },1800);
+  }
+  renderCats(); renderList();
+</script>
+</body>
+</html>

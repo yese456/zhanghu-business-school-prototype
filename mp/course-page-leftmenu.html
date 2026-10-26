@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="T19QbiW6091dIyaEpsyYhg"><head data-page-node-id="9I3RTiLbATTDbTe8A35Fk6">
+<meta charset="UTF-8" data-page-node-id="o7VDXC8ovctJkvLqnxCZjC">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="wTSF8UUZvcB8ODIev0xvAH">
+<title data-page-node-id="kHvGWg9KMQk97HfFjaOmAQ">课程 · 左侧分类菜单改版</title>
+<style data-page-node-id="ggY6hAlBq6xOD5Z26Wxlbt">
+:root{
+  --green:#0abf8f;
+  --green-bg:#e8f8f2;
+  --text:#222;
+  --text2:#999;
+  --line:#f0f0f0;
+  --bg:#f7f7f7;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  background:#e9e9e9;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  display:flex;justify-content:center;align-items:flex-start;
+  min-height:100vh;padding:24px 0;
+}
+.phone{
+  width:390px;height:844px;background:#fff;border-radius:40px;
+  box-shadow:0 12px 40px rgba(0,0,0,.18);overflow:hidden;
+  display:flex;flex-direction:column;position:relative;
+}
+/* ---- 状态栏 ---- */
+.statusbar{
+  height:44px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;font-size:15px;font-weight:600;color:#000;flex-shrink:0;
+}
+.statusbar .right{display:flex;align-items:center;gap:5px;font-size:13px}
+.pill{
+  background:#000;color:#fff;border-radius:16px;height:30px;
+  display:flex;align-items:center;gap:6px;padding:0 12px;font-size:12px;font-weight:500;
+}
+.pill .dot{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7be0b6,#0a8f5f)}
+/* ---- 导航栏 ---- */
+.navbar{
+  height:44px;display:flex;align-items:center;position:relative;flex-shrink:0;
+  padding:0 14px;border-bottom:.5px solid #f2f2f2;
+}
+.navbar .back{font-size:20px;color:#222;width:24px}
+.navbar .title{position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600}
+.navbar .capsule{
+  margin-left:auto;display:flex;align-items:center;gap:1px;
+  border:.5px solid #e5e5e5;border-radius:16px;height:30px;padding:0 12px;background:rgba(255,255,255,.8);
+}
+.navbar .capsule span{font-size:16px;color:#222;line-height:1}
+.navbar .capsule i{width:.5px;height:16px;background:#e5e5e5}
+/* ---- 搜索框 ---- */
+.search-wrap{padding:10px 14px;flex-shrink:0;background:#fff}
+.search{
+  height:34px;background:#f2f3f5;border-radius:17px;
+  display:flex;align-items:center;gap:6px;padding:0 14px;color:#9aa0a8;font-size:14px;
+}
+/* ---- 主体：左菜单 + 右列表 ---- */
+.body{flex:1;display:flex;overflow:hidden;background:var(--bg)}
+/* 左侧菜单 */
+.side{
+  width:96px;flex-shrink:0;background:#fff;overflow-y:auto;
+  padding:6px 0 24px;border-right:.5px solid var(--line);
+}
+.side::-webkit-scrollbar{display:none}
+.side-item{
+  height:52px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#555;position:relative;cursor:pointer;transition:background .15s;
+  white-space:nowrap;overflow:hidden;
+}
+.side-item:active{background:#f5f5f5}
+.side-item.active{
+  color:var(--green);font-weight:600;background:var(--green-bg);
+}
+.side-item.active::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:24px;background:var(--green);border-radius:0 3px 3px 0;
+}
+.side-item .cnt{
+  display:none;
+}
+/* 右侧列表 */
+.main{flex:1;overflow-y:auto;padding:12px 12px 24px}
+.main::-webkit-scrollbar{display:none}
+.meta-row{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--text2);padding:2px 2px 10px;
+}
+.meta-row .sorts{display:flex;gap:12px;align-items:center}
+.meta-row .sorts .on{color:#333;font-weight:600}
+.meta-row .sorts i{width:1px;height:10px;background:#ddd}
+/* 分组标题（"全部"视图下显示） */
+.group-title{
+  font-size:13px;font-weight:600;color:#333;
+  padding:10px 2px 8px;display:flex;align-items:center;gap:6px;
+}
+.group-title::before{content:"";width:3px;height:12px;background:var(--green);border-radius:2px}
+.group-title .n{font-weight:400;color:#bbb;font-size:12px}
+/* 课程卡片 */
+.course{
+  background:#fff;border-radius:12px;padding:10px;
+  display:flex;gap:10px;margin-bottom:10px;cursor:pointer;
+}
+.course:active{background:#fafafa}
+.cover{
+  width:112px;height:76px;border-radius:8px;flex-shrink:0;position:relative;overflow:hidden;
+}
+.cover .ph{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;gap:2px;
+}
+.cover .ph .t{font-size:15px;font-weight:600;letter-spacing:2px}
+.cover .ph .e{font-size:9px;letter-spacing:3px;opacity:.85}
+.cover .tag{
+  position:absolute;left:0;top:0;background:rgba(0,0,0,.55);color:#fff;
+  font-size:10px;padding:2px 7px;border-radius:8px 0 8px 0;
+}
+.g1{background:linear-gradient(135deg,#a8b6c4,#6f8194)}
+.g2{background:linear-gradient(135deg,#5b8def,#3a63c9)}
+.g3{background:linear-gradient(135deg,#57c793,#2e9e6b)}
+.g4{background:linear-gradient(135deg,#f0a35e,#dd7f36)}
+.g5{background:linear-gradient(135deg,#b48ce0,#8256c9)}
+.cinfo{flex:1;min-width:0;display:flex;flex-direction:column}
+.cinfo .name{
+  font-size:15px;font-weight:600;color:var(--text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:2px;
+}
+.cinfo .st{font-size:12px;color:var(--text2);margin-top:8px}
+/* 二级栏目 chips */
+.chips{
+  display:flex;gap:8px;overflow-x:auto;padding:0 2px 10px;
+  position:sticky;top:0;background:var(--bg);z-index:2;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex-shrink:0;height:28px;padding:0 12px;border-radius:14px;
+  background:#fff;color:#555;font-size:13px;
+  display:flex;align-items:center;gap:4px;cursor:pointer;
+}
+.chip .c{font-size:11px;color:#bbb}
+.chip.active{background:var(--green);color:#fff;font-weight:600}
+.chip.active .c{color:rgba(255,255,255,.75)}
+.chip:active{opacity:.8}
+/* 卡片上的栏目小标 */
+.cinfo .col{
+  display:inline-block;background:#f2f3f5;color:#7a828b;
+  font-size:11px;padding:2px 6px;border-radius:4px;margin:0 4px 0 0;
+}
+.empty{padding:60px 0;text-align:center;color:#bbb;font-size:13px}
+/* home indicator */
+.home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:#111}
+</style>
+<style id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<body data-page-node-id="BaA1EYC9EDKHROqaecw66B" style="">
+<div class="phone" data-page-node-id="grKBWEHJTCt1YkgmN1vcvB">
+  <!-- 状态栏 -->
+  <div class="statusbar" data-page-node-id="5PGOILqCUWdOyESPpFJKoq">
+    <span data-page-node-id="uBFgV8sFkG00Ak4uDkOFii">17:43</span>
+    
+    <div class="right" data-page-node-id="pZvfWEirIrHKXlhnKQYEBW">
+      <svg width="17" height="12" viewBox="0 0 17 12" data-page-node-id="OJ9AyxjQCeoTQIFCv4DMNm"><g fill="#000" data-page-node-id="zN0gxJE6e0IHeaav4DNLIY"><rect x="0" y="7" width="3" height="5" rx="1" data-page-node-id="AHtRoLFDMDoEfY1LPDc59E"></rect><rect x="4.5" y="5" width="3" height="7" rx="1" data-page-node-id="YmweLwecneNwOAr1QWAAkB"></rect><rect x="9" y="2.5" width="3" height="9.5" rx="1" data-page-node-id="kr8Bm7slaBEuI7N2N3Vwkf"></rect><rect x="13.5" y="0" width="3" height="12" rx="1" data-page-node-id="icjqYpqSunKSzXs2wF8skf"></rect></g></svg>
+      <span data-page-node-id="21MCnhzKDzfQcfSLMpFM7M">96</span>
+      <svg width="25" height="12" viewBox="0 0 25 12" data-page-node-id="5cEbQuwqdF0hQkp0CGdLAu"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" fill="none" stroke="#000" opacity=".4" data-page-node-id="BiaSZTHXMkZ5PEtEVSyl6Z"></rect><rect x="2" y="2" width="15" height="8" rx="2" fill="#000" data-page-node-id="cecymJwW7eaRUvNen1A3pM"></rect><rect x="23" y="4" width="2" height="4" rx="1" fill="#000" opacity=".4" data-page-node-id="kgnmV4DQoy0Ci23sOvCGzv"></rect></svg>
+    </div>
+  </div>
+  <!-- 导航 -->
+  <div class="navbar" data-page-node-id="BPrO0spWQnsF7qd10LUjvb">
+    <span class="back" data-page-node-id="bM0TRt73M4rp29a9Adiyuz" onclick="goBack()">‹</span>
+    <span class="title" data-page-node-id="fGrgqLlbC2SPNeaUBfbCMZ">课程</span>
+    <span class="capsule" data-page-node-id="azDwexAc11eRLvtBkKuL5F"><span data-page-node-id="h8GTGDPvBhJ5u1LpFkvWZm">•••</span><i data-page-node-id="Bew0Pjkb65ms7JzdQ67vpN"></i><span data-page-node-id="vGfhvuzYYV1f9xY25K48q1">◉</span></span>
+  </div>
+  <!-- 搜索 -->
+  <div class="search-wrap" data-page-node-id="HiR9B2A4YcsuVDemD1wsI3">
+    <div class="search" data-page-node-id="DKcOuhysudyqlWPqcFf0tR">
+      <svg width="15" height="15" viewBox="0 0 15 15" data-page-node-id="GmZPkm76bdowH8JbB50mJC"><circle cx="6.5" cy="6.5" r="5" fill="none" stroke="#9aa0a8" stroke-width="1.5" data-page-node-id="yYq02ruANxFPOYYnhKsGYo"></circle><rect x="10.2" y="10.8" width="4" height="1.6" rx=".8" transform="rotate(45 10.2 10.8)" fill="#9aa0a8" data-page-node-id="FvvpP6jNFWH521tZ1bRx7R"></rect></svg>
+      请输入你想搜索的关键词
+    </div>
+  </div>
+  <!-- 主体 -->
+  <div class="body" data-page-node-id="MYytdEb0TYoc5LasdviFGv">
+    <div class="side" id="side" data-page-node-id="qaMA2pPhCuxHz62BG47Ufd"><div class="side-item active" onclick="pick('本月推荐')">本月推荐</div><div class="side-item " onclick="pick('新人培训')">新人培训</div><div class="side-item " onclick="pick('产品学习')">产品学习</div><div class="side-item " onclick="pick('技能提升')">技能提升</div><div class="side-item " onclick="pick('销售话术')">销售话术</div><div class="side-item " onclick="pick('数据资料')">数据资料</div></div>
+    <div class="main" id="main" data-page-node-id="9raEKP06ZYAVBzCfTiMMCs"><div class="chips"><div class="chip active" onclick="pickCol('全部')">全部<span class="c">22</span></div><div class="chip " onclick="pickCol('沙发')">沙发<span class="c">7</span></div><div class="chip " onclick="pickCol('床')">床<span class="c">1</span></div><div class="chip " onclick="pickCol('床垫')">床垫<span class="c">1</span></div><div class="chip " onclick="pickCol('柜类')">柜类<span class="c">1</span></div><div class="chip " onclick="pickCol('桌椅')">桌椅<span class="c">1</span></div><div class="chip " onclick="pickCol('综合')">综合<span class="c">14</span></div></div><div class="group-title">新人培训<span class="n">(3)</span></div><div class="course"><div class="cover g2"><div class="ph"><span class="t">课程</span><span class="e">PRODUCT</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">产品基础篇</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g1"><div class="ph"><span class="t">课程</span><span class="e">CULTURE</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">企业文化与品牌故事</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g3"><div class="ph"><span class="t">课程</span><span class="e">ONBOARD</span></div></div><div class="cinfo"><div class="name">新员工入职指引</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="group-title">产品学习<span class="n">(8)</span></div><div class="course"><div class="cover g2"><div class="ph"><span class="t">课程</span><span class="e">SOFA</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">沙发结构与卖点</div><div class="st"><span class="col">沙发</span>未学习</div></div></div><div class="course"><div class="cover g1"><div class="ph"><span class="t">课程</span><span class="e">LEATHER</span></div></div><div class="cinfo"><div class="name">皮沙发工艺与保养</div><div class="st"><span class="col">沙发</span>未学习</div></div></div><div class="course"><div class="cover g5"><div class="ph"><span class="t">课程</span><span class="e">FABRIC</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">布艺沙发卖点解析</div><div class="st"><span class="col">沙发</span>未学习</div></div></div><div class="course"><div class="cover g3"><div class="ph"><span class="t">课程</span><span class="e">RECLINER</span></div></div><div class="cinfo"><div class="name">功能沙发与电动位</div><div class="st"><span class="col">沙发</span><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g4"><div class="ph"><span class="t">课程</span><span class="e">BED</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">软床产品知识</div><div class="st"><span class="col">床</span>未学习</div></div></div><div class="course"><div class="cover g3"><div class="ph"><span class="t">课程</span><span class="e">MATTRESS</span></div></div><div class="cinfo"><div class="name">床垫选购指南</div><div class="st"><span class="col">床垫</span>未学习</div></div></div><div class="course"><div class="cover g5"><div class="ph"><span class="t">课程</span><span class="e">CABINET</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">全屋柜类定制</div><div class="st"><span class="col">柜类</span><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g1"><div class="ph"><span class="t">课程</span><span class="e">TABLE</span></div></div><div class="cinfo"><div class="name">餐桌椅搭配</div><div class="st"><span class="col">桌椅</span>未学习</div></div></div><div class="group-title">技能提升<span class="n">(4)</span></div><div class="course"><div class="cover g3"><div class="ph"><span class="t">课程</span><span class="e">DESIGN</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">艾绿版面搭建</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g1"><div class="ph"><span class="t">课程</span><span class="e">RETAIL</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">终端导购学习课件</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g4"><div class="ph"><span class="t">课程</span><span class="e">DESIGN</span></div></div><div class="cinfo"><div class="name">量尺与方案设计</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g2"><div class="ph"><span class="t">课程</span><span class="e">MATCH</span></div></div><div class="cinfo"><div class="name">沙发场景搭配技巧</div><div class="st"><span class="col">沙发</span><span class="col">综合</span>未学习</div></div></div><div class="group-title">销售话术<span class="n">(4)</span></div><div class="course"><div class="cover g2"><div class="ph"><span class="t">课程</span><span class="e">TALKING</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">沙发接待话术</div><div class="st"><span class="col">沙发</span>未学习</div></div></div><div class="course"><div class="cover g4"><div class="ph"><span class="t">课程</span><span class="e">HIGHEND</span></div></div><div class="cinfo"><div class="name">高端沙发成交话术</div><div class="st"><span class="col">沙发</span>未学习</div></div></div><div class="course"><div class="cover g5"><div class="ph"><span class="t">课程</span><span class="e">TALKING</span></div><span class="tag">必修</span></div><div class="cinfo"><div class="name">客户异议处理</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g3"><div class="ph"><span class="t">课程</span><span class="e">CLOSE</span></div></div><div class="cinfo"><div class="name">逼单与成交技巧</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="group-title">数据资料<span class="n">(3)</span></div><div class="course"><div class="cover g1"><div class="ph"><span class="t">课程</span><span class="e">DATA</span></div></div><div class="cinfo"><div class="name">行业数据分析</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g4"><div class="ph"><span class="t">课程</span><span class="e">DATA</span></div></div><div class="cinfo"><div class="name">门店报表解读</div><div class="st"><span class="col">综合</span>未学习</div></div></div><div class="course"><div class="cover g2"><div class="ph"><span class="t">课程</span><span class="e">DATA</span></div></div><div class="cinfo"><div class="name">竞品对比资料包</div><div class="st"><span class="col">综合</span>未学习</div></div></div></div>
+  <div class="home-ind" data-page-node-id="wYD5DfPQWH2p723mBbPraW"></div>
+</div>
+
+<script data-page-node-id="C73BTHYHKGwHOGUdrwq5Zt">
+var CATS = ["新人培训","产品学习","技能提升","销售话术","数据资料"];
+var COLS = ["沙发","床","床垫","柜类","桌椅","综合"];
+
+// cols 为数组：一门课程可同时归属多个栏目（如“功能沙发与电动位”既在沙发、也在综合）
+var COURSES = [
+  // 新人培训
+  {cat:"新人培训", cols:["综合"],       name:"产品基础篇",       must:true,  g:"g2", e:"PRODUCT"},
+  {cat:"新人培训", cols:["综合"],       name:"企业文化与品牌故事", must:true,  g:"g1", e:"CULTURE"},
+  {cat:"新人培训", cols:["综合"],       name:"新员工入职指引",    must:false, g:"g3", e:"ONBOARD"},
+  // 产品学习
+  {cat:"产品学习", cols:["沙发"],       name:"沙发结构与卖点",    must:true,  g:"g2", e:"SOFA"},
+  {cat:"产品学习", cols:["沙发"],       name:"皮沙发工艺与保养",  must:false, g:"g1", e:"LEATHER"},
+  {cat:"产品学习", cols:["沙发"],       name:"布艺沙发卖点解析",  must:true,  g:"g5", e:"FABRIC"},
+  {cat:"产品学习", cols:["沙发","综合"], name:"功能沙发与电动位",  must:false, g:"g3", e:"RECLINER"},
+  {cat:"产品学习", cols:["床"],         name:"软床产品知识",      must:true,  g:"g4", e:"BED"},
+  {cat:"产品学习", cols:["床垫"],       name:"床垫选购指南",      must:false, g:"g3", e:"MATTRESS"},
+  {cat:"产品学习", cols:["柜类","综合"], name:"全屋柜类定制",      must:true,  g:"g5", e:"CABINET"},
+  {cat:"产品学习", cols:["桌椅"],       name:"餐桌椅搭配",        must:false, g:"g1", e:"TABLE"},
+  // 技能提升
+  {cat:"技能提升", cols:["综合"],       name:"艾绿版面搭建",      must:true,  g:"g3", e:"DESIGN"},
+  {cat:"技能提升", cols:["综合"],       name:"终端导购学习课件",  must:true,  g:"g1", e:"RETAIL"},
+  {cat:"技能提升", cols:["综合"],       name:"量尺与方案设计",    must:false, g:"g4", e:"DESIGN"},
+  {cat:"技能提升", cols:["沙发","综合"], name:"沙发场景搭配技巧",  must:false, g:"g2", e:"MATCH"},
+  // 销售话术
+  {cat:"销售话术", cols:["沙发"],       name:"沙发接待话术",      must:true,  g:"g2", e:"TALKING"},
+  {cat:"销售话术", cols:["沙发"],       name:"高端沙发成交话术",  must:false, g:"g4", e:"HIGHEND"},
+  {cat:"销售话术", cols:["综合"],       name:"客户异议处理",      must:true,  g:"g5", e:"TALKING"},
+  {cat:"销售话术", cols:["综合"],       name:"逼单与成交技巧",    must:false, g:"g3", e:"CLOSE"},
+  // 数据资料
+  {cat:"数据资料", cols:["综合"],       name:"行业数据分析",      must:false, g:"g1", e:"DATA"},
+  {cat:"数据资料", cols:["综合"],       name:"门店报表解读",      must:false, g:"g4", e:"DATA"},
+  {cat:"数据资料", cols:["综合"],       name:"竞品对比资料包",    must:false, g:"g2", e:"DATA"}
+];
+
+var MENU = ["本月推荐"].concat(CATS);
+var cur = "本月推荐";
+var curCol = "全部";
+
+function inCat(){ return cur === "本月推荐" ? COURSES : COURSES.filter(function(c){return c.cat === cur;}); }
+function inCol(scope, col){ return col === "全部" ? scope : scope.filter(function(c){return c.cols.indexOf(col) > -1;}); }
+
+function renderMenu(){
+  var html = "";
+  MENU.forEach(function(m){
+    html += '<div class="side-item ' + (m === cur ? "active" : "") + '" onclick="pick(\'' + m + '\')">' + m + '</div>';
+  });
+  document.getElementById("side").innerHTML = html;
+}
+
+function renderChips(){
+  var scope = inCat();
+  var html = '<div class="chip ' + (curCol === "全部" ? "active" : "") + '" onclick="pickCol(\'全部\')">全部<span class="c">' + scope.length + '</span></div>';
+  COLS.forEach(function(k){
+    var n = inCol(scope, k).length;
+    if(!n) return;
+    html += '<div class="chip ' + (curCol === k ? "active" : "") + '" onclick="pickCol(\'' + k + '\')">' + k + '<span class="c">' + n + '</span></div>';
+  });
+  return html;
+}
+
+function cardHtml(c){
+  var tags = c.cols.map(function(k){return '<span class="col">' + k + '</span>';}).join("");
+  // 第一个课程 → 简单版课程详情；第二个及后续课程 → 章节课页面
+  var url = (c.name === '产品基础篇') ? 'course-detail.html?from=list' : 'course-chapter.html';
+  return '<div class="course" onclick="location.href=\'' + url + '\'">' +
+    '<div class="cover ' + c.g + '"><div class="ph"><span class="t">课程</span><span class="e">' + c.e + '</span></div>' +
+    (c.must ? '<span class="tag">必修</span>' : '') + '</div>' +
+    '<div class="cinfo"><div class="name">' + c.name + '</div>' +
+    '<div class="st">' + tags + '未学习</div></div></div>';
+}
+
+function renderList(){
+  var html = '<div class="chips">' + renderChips() + '</div>';
+  if(cur === "本月推荐"){
+    // 本月推荐：按 新人培训 → 产品学习 → 技能提升 → 销售话术 → 数据资料 分组排列（受栏目过滤）
+    CATS.forEach(function(cat){
+      var g = inCol(COURSES.filter(function(c){return c.cat === cat;}), curCol);
+      if(!g.length) return;
+      html += '<div class="group-title">' + cat + '<span class="n">(' + g.length + ')</span></div>';
+      g.forEach(function(c){ html += cardHtml(c); });
+    });
+    if(!inCol(COURSES, curCol).length) html += '<div class="empty">该栏目下暂无课程</div>';
+  }else{
+    var list = inCol(inCat(), curCol);
+    html += '<div class="meta-row"><span>共' + list.length + '课</span>' +
+      '<span class="sorts"><span class="on">最新</span><i></i><span>最多学习</span></span></div>';
+    if(list.length){
+      list.forEach(function(c){ html += cardHtml(c); });
+    }else{
+      html += '<div class="empty">该栏目下暂无课程</div>';
+    }
+  }
+  document.getElementById("main").innerHTML = html;
+  document.getElementById("main").scrollTop = 0;
+}
+
+function goBack(){ location.href='course-admin-home.html'; }
+
+function pick(m){
+  cur = m;
+  curCol = "全部";
+  renderMenu();
+  renderList();
+}
+
+function pickCol(k){
+  curCol = k;
+  renderList();
+}
+
+renderMenu();
+renderList();
+</script>
+
+
+</body></html>

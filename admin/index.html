@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>掌狐 · 商学院 后台原型（目录）</title>
+<style>
+  :root{ --ink:#1f2329; --sub:#8a909c; --line:#eceff4; --blue:#2f6bff; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:#f5f6f8; color:var(--ink); padding:40px 20px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{font-size:24px;font-weight:700}
+  .desc{margin-top:10px;font-size:14px;color:var(--sub);line-height:1.8}
+  .desc b{color:var(--ink)}
+  .note{margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;
+    font-size:13px;color:#555;line-height:1.9}
+  .note .t{font-weight:600;color:var(--ink);margin-bottom:6px;display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:24px}
+  a{text-decoration:none;color:inherit}
+  .card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:16px;transition:transform .12s ease,box-shadow .12s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(40,50,90,.10)}
+  .ic{width:44px;height:44px;flex:none;border-radius:11px;display:flex;align-items:center;
+    justify-content:center;font-size:21px;color:#fff;background:linear-gradient(135deg,#2f6bff,#5b8bff)}
+  .txt{flex:1;min-width:0}
+  .txt .cn{font-size:15px;font-weight:600}
+  .txt .en{font-size:12px;color:var(--sub);margin-top:3px}
+  .go{font-size:19px;color:#c6cad3}
+  .foot{margin-top:28px;text-align:center;font-size:12px;color:#b6bcc7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>掌狐 · 商学院 后台原型</h1>
+  <p class="desc">
+    本包为<b> Web 管理后台</b>（PC 端）原型，共 4 个页面，基于 Element Plus 规范还原。
+    依赖库已打包在 <b>vendor/</b> 目录内，<b>离线可直接打开</b>，无需联网。
+  </p>
+  <div class="note">
+    <span class="t">说明</span>
+    后台负责课程内容与推荐位的配置管理；其「查看小程序课程」按钮可跳转到小程序端对应页面，
+    用于演示「后台配置 → 小程序呈现」的联动关系（小程序端在另一个包中）。
+  </div>
+
+  <div class="grid">
+    <a class="card" href="bs-course-admin.html">
+      <div class="ic">📊</div>
+      <div class="txt"><div class="cn">商学院 · 课程管理</div><div class="en">课程列表 · 课程分类</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-admin-categories.html">
+      <div class="ic">🗂</div>
+      <div class="txt"><div class="cn">课程分类</div><div class="en">分类维护与管理</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-admin-create.html">
+      <div class="ic">➕</div>
+      <div class="txt"><div class="cn">开设常规课程</div><div class="en">新建课程表单</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-admin-recpositions.html">
+      <div class="ic">⭐</div>
+      <div class="txt"><div class="cn">推荐位管理</div><div class="en">推荐位列表 · 子推荐位</div></div>
+      <div class="go">›</div>
+    </a>
+  </div>
+
+  <div class="foot">掌狐 · 商学院后台原型 · 演示用</div>
+</div>
+</body>
+</html>

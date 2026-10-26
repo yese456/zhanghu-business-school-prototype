@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 章节课</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --field:#f4f5f8; --cyan:#13b5a6; --cyan-d:#0e9b8e;
+    --orange:#ff7a3c; --green:#1faa6b; --purple:#7a5bff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;background:var(--bg);display:flex;justify-content:center;padding:24px 12px;-webkit-font-smoothing:antialiased}
+  .phone{width:390px;max-width:100%;background:#fff;min-height:780px;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(20,30,60,.18);display:flex;flex-direction:column;position:relative}
+  /* 状态栏 */
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:13px;font-weight:600;color:var(--ink)}
+  .statusbar .right{display:flex;align-items:center;gap:6px}
+  .signal{display:flex;gap:2px;align-items:flex-end;height:11px}
+  .signal i{width:3px;background:var(--ink);border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px;display:flex;align-items:center;padding:0 12px;position:relative;border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px;color:var(--ink);width:34px;line-height:1;cursor:pointer;position:relative;z-index:2}
+  .navbar .title{position:absolute;left:0;right:0;text-align:center;font-size:17px;font-weight:600;color:var(--ink)}
+  .navbar .capsule{margin-left:auto;display:flex;align-items:center;gap:5px;border:1px solid #e3e6ec;border-radius:16px;height:30px;padding:0 7px;background:#f7f8fa}
+  .navbar .capsule .dots{display:flex;gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 滚动内容 */
+  .main{flex:1;background:#f6f7fb;overflow:auto;padding-bottom:84px}
+  /* 横幅 */
+  .banner{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+    background:radial-gradient(120% 80% at 20% 0%,#c9d3e6 0%,transparent 60%),radial-gradient(120% 90% at 90% 20%,#b9c4d8 0%,transparent 55%),linear-gradient(135deg,#aeb9cf 0%,#cfd6e3 100%)}
+  .banner .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);background-size:28px 28px;filter:blur(.4px);opacity:.7}
+  .banner .desk{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);width:60%;height:30%;background:linear-gradient(180deg,#7c879c,#5d6678);border-radius:6px 6px 3px 3px;box-shadow:0 10px 18px rgba(40,50,70,.25)}
+  .banner .desk:before{content:"";position:absolute;left:14%;right:14%;top:-10%;height:14%;background:#3f4756;border-radius:3px}
+  .banner .wbox{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.92);border-radius:8px;padding:8px 16px;text-align:center;box-shadow:0 8px 20px rgba(20,30,60,.2)}
+  .banner .wbox .cn{font-size:14px;font-weight:700;color:#2b3242;letter-spacing:2px}
+  .banner .wbox .en{font-size:10px;letter-spacing:2px;color:#6b7382;margin-top:2px}
+  /* 头部信息 */
+  .head{background:#fff;padding:16px}
+  .head h1{font-size:19px;font-weight:700;color:var(--ink)}
+  .head .sub{margin-top:8px;font-size:13px;color:var(--sub)}
+  /* Tabs */
+  .tabs{display:flex;background:#fff;border-top:1px solid var(--line);position:sticky;top:0;z-index:2}
+  .tab{flex:1;text-align:center;padding:13px 0;font-size:15px;color:var(--sub);position:relative;cursor:pointer}
+  .tab.on{color:var(--ink);font-weight:600}
+  .tab.on:after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:28px;height:3px;background:var(--cyan);border-radius:2px}
+  .sec-page{scroll-margin-top:54px}
+  .intro-txt{font-size:14px;color:var(--sub);line-height:1.7}
+  /* 课程目录 */
+  .sec{padding:16px}
+  .sec-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .sec-bar{width:4px;height:16px;background:var(--cyan);border-radius:2px}
+  .sec-title{font-size:15px;font-weight:700;color:var(--ink)}
+  .group{display:flex;align-items:center;gap:8px;background:var(--field);border-radius:10px;padding:12px 14px;cursor:pointer;font-size:14px;font-weight:600;color:var(--ink)}
+  .group .arr{margin-left:auto;color:var(--sub);transition:transform .2s ease}
+  .group .arr.up{transform:rotate(180deg)}
+  .clist{overflow:hidden}
+  .crow{display:flex;align-items:center;gap:12px;padding:14px 4px;border-top:1px solid var(--line);cursor:pointer}
+  .crow:active{background:#f2f4f7}
+  .cicon{width:40px;height:40px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+  .cicon.green{background:rgba(31,170,107,.12);color:var(--green)}
+  .cicon.purple{background:rgba(122,91,255,.12);color:var(--purple);font-size:0}
+  .cicon.purple:before{content:"";width:0;height:0;border-left:12px solid var(--purple);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
+  .ccol{flex:1;min-width:0}
+  .ctag{display:inline-block;font-size:11px;color:var(--orange);border:1px solid var(--orange);border-radius:4px;padding:1px 6px;margin-bottom:5px}
+  .ctitle{font-size:14px;color:var(--ink);font-weight:500}
+  .csub{margin-top:3px;font-size:12px;color:var(--sub)}
+  .cstate{font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px}
+  .cstate.done{color:var(--green)}
+  .cstate.lock{color:var(--sub)}
+  /* 底部 */
+  .actionbar{position:absolute;left:0;right:0;bottom:0;height:72px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;padding:0 16px;box-shadow:0 -4px 16px rgba(20,30,60,.05)}
+  .btn-continue{flex:1;height:46px;border:none;border-radius:23px;background:linear-gradient(135deg,var(--cyan),#3fd0bf);color:#fff;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 8px 18px rgba(19,181,166,.3);transition:transform .12s ease}
+  .btn-continue:active{transform:scale(.985)}
+  /* Toast */
+  .toast{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%) scale(.96);background:rgba(20,24,35,.86);color:#fff;font-size:13px;padding:10px 16px;border-radius:10px;z-index:30;opacity:0;visibility:hidden;transition:opacity .2s ease,transform .2s ease;text-align:center;max-width:80%}
+  .toast.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="title">课程详情</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <!-- 横幅 -->
+      <div class="banner">
+        <div class="grid"></div><div class="desk"></div>
+        <div class="wbox"><div class="cn">课程</div><div class="en">LEARNING</div></div>
+      </div>
+
+      <!-- 头部信息 -->
+      <div class="head">
+        <h1>章节课-教材库选</h1>
+        <div class="sub">已学习 1/4 节 ｜ 9人在学</div>
+      </div>
+
+      <!-- 导航（锚点跳转，介绍与目录同页） -->
+      <div class="tabs">
+        <div class="tab on" data-target="sec-intro" onclick="jumpTo('sec-intro')">介绍</div>
+        <div class="tab" data-target="sec-dir" onclick="jumpTo('sec-dir')">目录</div>
+      </div>
+
+      <!-- 介绍（与目录同页，锚点定位） -->
+      <div class="sec-page" id="sec-intro">
+        <div class="intro-txt" style="padding:16px">1212</div>
+      </div>
+
+      <!-- 课程目录（同页，锚点定位） -->
+      <div class="sec-page" id="sec-dir">
+        <div class="sec">
+          <div class="sec-head"><span class="sec-bar"></span><span class="sec-title">课程目录</span></div>
+          <div class="group" onclick="toggleGroup()">
+            销售基础技能
+            <span class="arr up" id="garr">∧</span>
+          </div>
+          <div class="clist" id="clist">
+            <!-- 子课程：点击跳转到 course-detail-2.html -->
+            <div class="crow" onclick="goDetail()">
+              <div class="cicon green">X</div>
+              <div class="ccol">
+                <span class="ctag">必修</span>
+                <div class="ctitle">1 门店接待礼仪</div>
+                <div class="csub">需学习 1 分钟</div>
+              </div>
+              <div class="cstate done">✓ 已学完</div>
+            </div>
+            <div class="crow" onclick="toast('需先完成上一节课程')">
+              <div class="cicon purple"></div>
+              <div class="ccol">
+                <span class="ctag">必修</span>
+                <div class="ctitle">2 产品讲解逻辑话术</div>
+                <div class="csub">时长: 2分钟19秒</div>
+              </div>
+              <div class="cstate lock">🔒</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部：继续学习 -->
+    <div class="actionbar">
+      <button class="btn-continue" onclick="goDetail()">继续学习</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  function goBack(){ location.href='course-page-leftmenu.html'; }
+  function goDetail(){ location.href = 'course-detail-2.html'; }
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    if(!t){ alert(msg); return; }
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  }
+
+  function setActive(target){
+    document.querySelectorAll('.tab').forEach(function(t){ t.classList.toggle('on', t.dataset.target === target); });
+  }
+  function jumpTo(id){
+    setActive(id);
+    document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  // 滚动时同步高亮当前所处区块（锚点联动）
+  (function(){
+    var main = document.querySelector('.main');
+    var tabsH = 54;
+    main.addEventListener('scroll', function(){
+      var base = main.getBoundingClientRect().top + tabsH;
+      var dirTop = document.getElementById('sec-dir').getBoundingClientRect().top;
+      setActive(dirTop <= base ? 'sec-dir' : 'sec-intro');
+    });
+  })();
+
+  function toggleGroup(){
+    var list = document.getElementById('clist');
+    var arr = document.getElementById('garr');
+    var hidden = list.style.display === 'none';
+    list.style.display = hidden ? 'block' : 'none';
+    arr.classList.toggle('up', hidden);
+  }
+</script>
+</body>
+</html>

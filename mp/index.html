@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>掌狐 · 商学院 小程序原型（目录）</title>
+<style>
+  :root{ --ink:#1f2329; --sub:#8a909c; --line:#eceff4; --blue:#2f6bff; --cyan:#13b5a6; --pur:#6d4ed6; --pink:#a855f7; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:#f5f6f8; color:var(--ink); padding:40px 20px; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{font-size:24px;font-weight:700}
+  .desc{margin-top:10px;font-size:14px;color:var(--sub);line-height:1.8}
+  .desc b{color:var(--ink)}
+  .path{margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;
+    font-size:13px;color:#555;line-height:1.9}
+  .path .t{font-weight:600;color:var(--ink);margin-bottom:6px;display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:24px}
+  a{text-decoration:none;color:inherit}
+  .card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:16px;transition:transform .12s ease,box-shadow .12s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(40,50,90,.10)}
+  .ic{width:44px;height:44px;flex:none;border-radius:11px;display:flex;align-items:center;
+    justify-content:center;font-size:21px;color:#fff}
+  .txt{flex:1;min-width:0}
+  .txt .cn{font-size:15px;font-weight:600}
+  .txt .en{font-size:12px;color:var(--sub);margin-top:3px}
+  .go{font-size:19px;color:#c6cad3}
+  .foot{margin-top:28px;text-align:center;font-size:12px;color:#b6bcc7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>掌狐 · 商学院 小程序原型</h1>
+  <p class="desc">
+    本包为<b>微信小程序端</b>高保真原型，共 9 个页面，页面间已<b>完整打通</b>，可直接点击跳转体验。
+    页面以手机外壳模拟移动端效果，建议用浏览器打开；<b>无需联网</b>，双击 HTML 文件即可查看。
+  </p>
+  <div class="path">
+    <span class="t">推荐体验路径</span>
+    商学院首页 → 我的课程（课程列表） → 课程 / 章节课 → 课程详情 → 底部「下载课程资料」
+  </div>
+
+  <div class="grid">
+    <a class="card" href="course-admin-home.html">
+      <div class="ic" style="background:linear-gradient(135deg,#2f6bff,#5b8bff)">🏠</div>
+      <div class="txt"><div class="cn">商学院首页</div><div class="en">四大入口 · 建议从这开始</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-page-leftmenu.html">
+      <div class="ic" style="background:linear-gradient(135deg,#00b8a9,#33c9bb)">📚</div>
+      <div class="txt"><div class="cn">我的课程（课程列表）</div><div class="en">左侧分类菜单 · 22 门课程</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-chapter.html">
+      <div class="ic" style="background:linear-gradient(135deg,#0e9b8e,#13b5a6)">🎬</div>
+      <div class="txt"><div class="cn">章节课</div><div class="en">课程目录 · 介绍/目录锚点</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-detail-2.html">
+      <div class="ic" style="background:linear-gradient(135deg,#5b8def,#3a63c9)">📖</div>
+      <div class="txt"><div class="cn">课程详情（丰富版）</div><div class="en">章节卡片 · 讲师 · 资料下载</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-detail.html">
+      <div class="ic" style="background:linear-gradient(135deg,#a8b6c4,#6f8194)">📄</div>
+      <div class="txt"><div class="cn">课程详情（简洁版）</div><div class="en">单节课程 · 视频 + 下载</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-learn.html">
+      <div class="ic" style="background:linear-gradient(135deg,#6d4ed6,#9b6bff)">🎓</div>
+      <div class="txt"><div class="cn">我的学习</div><div class="en">完成的课程 · 学习成就</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-exam.html">
+      <div class="ic" style="background:linear-gradient(135deg,#a855f7,#c084fc)">📝</div>
+      <div class="txt"><div class="cn">我的考试</div><div class="en">进行中 / 已结束 · 答题</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-garden.html">
+      <div class="ic" style="background:linear-gradient(135deg,#57c793,#2e9e6b)">🌱</div>
+      <div class="txt"><div class="cn">学习园地</div><div class="en">分类筛选 · 资料列表</div></div>
+      <div class="go">›</div>
+    </a>
+    <a class="card" href="course-garden-detail.html">
+      <div class="ic" style="background:linear-gradient(135deg,#f0a35e,#dd7f36)">🗂</div>
+      <div class="txt"><div class="cn">学习园地详情</div><div class="en">资料卡 · 多 Tab 内容</div></div>
+      <div class="go">›</div>
+    </a>
+  </div>
+
+  <div class="foot">掌狐 · 商学院小程序原型 · 演示用</div>
+</div>
+</body>
+</html>

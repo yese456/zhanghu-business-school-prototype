@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 商学院</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --blue1:#2f6bff; --blue2:#5b8bff;
+    --pur1:#6d4ed6; --pur2:#9b6bff;
+    --pink1:#a855f7; --pink2:#c084fc;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:var(--bg); display:flex; justify-content:center; padding:24px 12px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .phone{
+    width:390px; max-width:100%; background:#fff; min-height:780px;
+    border-radius:30px; overflow:hidden; box-shadow:0 24px 60px rgba(20,30,60,.18);
+    display:flex; flex-direction:column; position:relative;
+  }
+  /* 状态栏 */
+  .statusbar{height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; font-size:13px; font-weight:600; color:var(--ink)}
+  .statusbar .right{display:flex; align-items:center; gap:6px}
+  .signal{display:flex; gap:2px; align-items:flex-end; height:11px}
+  .signal i{width:3px; background:var(--ink); border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px; display:flex; align-items:center; padding:0 12px; position:relative; border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px; color:var(--ink); width:34px; line-height:1; cursor:pointer}
+  .navbar .title{position:absolute; left:0; right:0; text-align:center; font-size:17px; font-weight:600; color:var(--ink)}
+  .navbar .capsule{margin-left:auto; display:flex; align-items:center; gap:5px; border:1px solid #e3e6ec; border-radius:16px; height:30px; padding:0 7px; background:#f7f8fa}
+  .navbar .capsule .dots{display:flex; gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 内容 */
+  .main{flex:1; background:#f6f7fb; padding:20px 16px 28px; overflow:auto}
+  .cards{display:flex; flex-direction:column; gap:14px}
+  .card{
+    display:flex; align-items:center; gap:14px; padding:18px 16px; border-radius:16px;
+    color:#fff; text-decoration:none; box-shadow:0 8px 20px rgba(40,50,90,.12);
+    transition:transform .12s ease, box-shadow .12s ease; cursor:pointer;
+  }
+  .card:active{transform:scale(.985); box-shadow:0 4px 12px rgba(40,50,90,.16)}
+  .card .ic{
+    width:52px; height:52px; flex:none; border-radius:14px; background:rgba(255,255,255,.22);
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+  }
+  .card .txt{flex:1; min-width:0}
+  .card .txt .cn{font-size:17px; font-weight:600; line-height:1.3}
+  .card .txt .en{font-size:11px; letter-spacing:1.5px; opacity:.85; margin-top:3px; text-transform:uppercase}
+  .card .go{font-size:22px; opacity:.9}
+  .card.blue{background:linear-gradient(135deg,var(--blue1),var(--blue2))}
+  .card.purple{background:linear-gradient(135deg,var(--pur1),var(--pur2))}
+  .card.pink{background:linear-gradient(135deg,var(--pink1),var(--pink2))}
+  .card.teal{background:linear-gradient(135deg,#00b8a9,#33c9bb)}
+  .foot{margin-top:22px; text-align:center; font-size:11px; color:#b6bcc7}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back">‹</div>
+      <div class="title">商学院</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <!--
+        基于小程序端商学院首页截图重建。
+        已按需求移除「直播课」「团队学习管理」两项（截图中原为“敬请期待”未上线入口）。
+        保留：我的课程 / 我的学习 / 我的考试。
+      -->
+      <div class="cards">
+        <a class="card blue" href="course-page-leftmenu.html">
+          <div class="ic">📚</div>
+          <div class="txt"><div class="cn">我的课程</div><div class="en">My Course</div></div>
+          <div class="go">›</div>
+        </a>
+        <a class="card purple" href="course-learn.html">
+          <div class="ic">🎓</div>
+          <div class="txt"><div class="cn">我的学习</div><div class="en">My Studies</div></div>
+          <div class="go">›</div>
+        </a>
+        <a class="card pink" href="course-exam.html">
+          <div class="ic">📝</div>
+          <div class="txt"><div class="cn">我的考试</div><div class="en">My Exam</div></div>
+          <div class="go">›</div>
+        </a>
+        <a class="card teal" href="course-garden.html">
+          <div class="ic">🌱</div>
+          <div class="txt"><div class="cn">学习园地</div><div class="en">Learning Venue</div></div>
+          <div class="go">›</div>
+        </a>
+      </div>
+
+      <div class="foot">掌狐 · 商学院原型演示</div>
+    </div>
+  </div>
+</body>
+</html>

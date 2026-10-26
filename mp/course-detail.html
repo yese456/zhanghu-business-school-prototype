@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>掌狐小程序 · 课程详情</title>
+<style>
+  :root{
+    --ink:#1f2329; --sub:#8a909c; --bg:#dfe3ea; --line:#eceff4;
+    --blue:#2f6bff; --blue-d:#2456d6; --field:#f4f5f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+    background:var(--bg); display:flex; justify-content:center; padding:24px 12px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .phone{
+    width:390px; max-width:100%; background:#fff; min-height:780px;
+    border-radius:30px; overflow:hidden; box-shadow:0 24px 60px rgba(20,30,60,.18);
+    display:flex; flex-direction:column; position:relative;
+  }
+  /* 状态栏 */
+  .statusbar{height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; font-size:13px; font-weight:600; color:var(--ink)}
+  .statusbar .right{display:flex; align-items:center; gap:6px}
+  .signal{display:flex; gap:2px; align-items:flex-end; height:11px}
+  .signal i{width:3px; background:var(--ink); border-radius:1px}
+  .signal i:nth-child(1){height:4px}.signal i:nth-child(2){height:6px}.signal i:nth-child(3){height:8px}.signal i:nth-child(4){height:11px}
+  .battery{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .battery:after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
+  .battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:62%;background:var(--ink);border-radius:1px}
+  /* 导航栏 */
+  .navbar{height:46px; display:flex; align-items:center; padding:0 12px; position:relative; border-bottom:1px solid var(--line)}
+  .navbar .back{font-size:22px; color:var(--ink); width:34px; line-height:1; cursor:pointer; position:relative; z-index:2}
+  .navbar .title{position:absolute; left:0; right:0; text-align:center; font-size:17px; font-weight:600; color:var(--ink)}
+  .navbar .capsule{margin-left:auto; display:flex; align-items:center; gap:5px; border:1px solid #e3e6ec; border-radius:16px; height:30px; padding:0 7px; background:#f7f8fa}
+  .navbar .capsule .dots{display:flex; gap:3px}
+  .navbar .capsule .dots b{width:4px;height:4px;border-radius:50%;background:#5b606b;display:block}
+  .navbar .capsule .cam{width:15px;height:15px;border:1.6px solid #50555f;border-radius:50%;position:relative}
+  .navbar .capsule .cam:after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.4px solid #50555f}
+  /* 滚动内容 */
+  .main{flex:1; background:#f6f7fb; overflow:auto; padding-bottom:84px}
+  /* 封面 / 视频区 */
+  .cover{
+    position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; cursor:pointer;
+    background:
+      radial-gradient(120% 80% at 20% 0%, #c9d3e6 0%, transparent 60%),
+      radial-gradient(120% 90% at 90% 20%, #b9c4d8 0%, transparent 55%),
+      linear-gradient(135deg, #aeb9cf 0%, #cfd6e3 100%);
+  }
+  .cover .grid{position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px); background-size:28px 28px; filter:blur(.4px); opacity:.7}
+  .cover .desk{position:absolute; left:50%; bottom:14%; transform:translateX(-50%); width:62%; height:30%; background:linear-gradient(180deg,#7c879c,#5d6678); border-radius:6px 6px 3px 3px; box-shadow:0 10px 18px rgba(40,50,70,.25)}
+  .cover .desk:before{content:""; position:absolute; left:14%; right:14%; top:-10%; height:14%; background:#3f4756; border-radius:3px}
+  .cover .badge{position:absolute; left:14px; top:14px; background:rgba(255,255,255,.92); color:#2b3242; font-size:11px; letter-spacing:1px; padding:4px 9px; border-radius:6px; font-weight:600}
+  .play{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:58px; height:58px; border-radius:50%; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(20,30,60,.28)}
+  .play:before{content:""; width:0; height:0; border-left:18px solid #2f6bff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:5px}
+  /* 课程信息 */
+  .info{background:#fff; padding:16px 16px 18px}
+  .info h1{font-size:19px; font-weight:700; color:var(--ink); line-height:1.35}
+  .info .meta{margin-top:10px; display:flex; align-items:center; justify-content:space-between}
+  .info .meta .left{font-size:13px; color:var(--sub)}
+  .info .meta .right{font-size:13px; color:var(--blue); display:flex; align-items:center; gap:3px; cursor:pointer}
+  .info .meta .right .arr{font-size:14px}
+  /* 底部操作栏 */
+  .actionbar{position:absolute; left:0; right:0; bottom:0; height:72px; background:#fff; border-top:1px solid var(--line); display:flex; align-items:center; gap:12px; padding:0 16px; box-shadow:0 -4px 16px rgba(20,30,60,.05)}
+  .btn-down{
+    flex:1; height:46px; border:none; border-radius:12px; cursor:pointer;
+    background:linear-gradient(135deg,var(--blue),#5b8bff); color:#fff;
+    font-size:16px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:7px;
+    box-shadow:0 8px 18px rgba(47,107,255,.28); transition:transform .12s ease;
+  }
+  .btn-down:active{transform:scale(.985)}
+  .btn-down .ico{font-size:17px}
+  /* 下载弹层 */
+  .mask{position:absolute; inset:0; background:rgba(15,20,35,.45); opacity:0; visibility:hidden; transition:opacity .22s ease; z-index:20}
+  .mask.show{opacity:1; visibility:visible}
+  .sheet{
+    position:absolute; left:0; right:0; bottom:0; background:#fff; z-index:21;
+    border-radius:20px 20px 0 0; padding:10px 18px calc(22px + env(safe-area-inset-bottom));
+    transform:translateY(100%); transition:transform .26s cubic-bezier(.22,.61,.36,1);
+  }
+  .sheet.show{transform:translateY(0)}
+  .sheet .handle{width:38px; height:4px; background:#e2e5ea; border-radius:3px; margin:6px auto 14px}
+  .sheet h3{font-size:16px; font-weight:700; color:var(--ink); text-align:center}
+  .sheet .tip{margin-top:8px; font-size:13px; color:var(--sub); line-height:1.6; text-align:center}
+  .sheet .tip b{color:var(--blue); font-weight:600}
+  .files{margin-top:16px; display:flex; flex-direction:column; gap:12px}
+  .file{display:flex; align-items:center; gap:12px; padding:12px; border:1px solid var(--line); border-radius:12px; background:#fbfcfe}
+  .file .fi{width:42px; height:42px; flex:none; border-radius:10px; background:var(--field); display:flex; align-items:center; justify-content:center; font-size:20px}
+  .file .fcol{flex:1; min-width:0}
+  .file .fname{font-size:13px; font-weight:600; color:var(--ink)}
+  .file .furl{margin-top:4px; font-size:11.5px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .file .copy{border:none; flex:none; height:34px; padding:0 14px; border-radius:9px; background:var(--blue); color:#fff; font-size:13px; font-weight:600; cursor:pointer}
+  .file .copy:active{background:var(--blue-d)}
+  .sheet .done{margin-top:18px; height:46px; border:none; border-radius:12px; background:#f1f3f7; color:var(--sub); font-size:15px; font-weight:600; width:100%; cursor:pointer}
+  /* Toast */
+  .toast{position:absolute; left:50%; top:42%; transform:translate(-50%,-50%) scale(.96); background:rgba(20,24,35,.86); color:#fff; font-size:13px; padding:10px 16px; border-radius:10px; z-index:30; opacity:0; visibility:hidden; transition:opacity .2s ease, transform .2s ease}
+  .toast.show{opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1)}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="right"><span class="signal"><i></i><i></i><i></i><i></i></span><span style="font-size:11px">5G</span><span class="battery"><i></i></span></div>
+    </div>
+    <div class="navbar">
+      <div class="back" onclick="goBack()">‹</div>
+      <div class="title">课程详情</div>
+      <div class="capsule"><span class="dots"><b></b><b></b><b></b></span><span class="cam"></span></div>
+    </div>
+
+    <div class="main">
+      <!-- 封面 / 视频入口 -->
+      <div class="cover" onclick="playVideo()">
+        <div class="grid"></div>
+        <div class="desk"></div>
+        <div class="badge">课程 · LEARNING</div>
+        <div class="play"></div>
+      </div>
+
+      <!-- 课程信息 -->
+      <div class="info">
+        <h1>大会议室投影操作培训</h1>
+        <div class="meta">
+          <div class="left">6人在学</div>
+          <div class="right" onclick="toast('（原型）查看完成条件')">已完成条件 <span class="arr">›</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部操作栏：下载按钮 -->
+    <div class="actionbar">
+      <button class="btn-down" onclick="openSheet()"><span class="ico">⬇</span>下载课程资料</button>
+    </div>
+
+    <!-- 下载弹层 -->
+    <div class="mask" id="mask" onclick="closeSheet()"></div>
+    <div class="sheet" id="sheet">
+      <div class="handle"></div>
+      <h3>保存到手机相册</h3>
+      <p class="tip">点击「下载」即可将课程<b>视频</b>保存到手机。<br>视频将存入<b>手机相册</b>。</p>
+      <div class="files" id="files"></div>
+      <button class="done" onclick="closeSheet()">完成</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+<script>
+  function goBack(){
+    var from = new URLSearchParams(location.search).get('from');
+    location.href = (from === 'learn') ? 'course-learn.html' : 'course-page-leftmenu.html';
+  }
+  // 课程可下载的媒体文件（原型占位链接，真实环境替换为 CDN 地址）
+  var COURSE_FILES = [
+    { type:'video', name:'课程视频',   url:'https://cdn.zhanghu.com/course/bs-201/lecture.mp4' }
+  ];
+
+  function renderFiles(){
+    var box = document.getElementById('files');
+    box.innerHTML = COURSE_FILES.map(function(f){
+      var icon = f.type === 'video' ? '🎬' : '🖼️';
+      return ''
+        + '<div class="file">'
+        +   '<div class="fi">'+icon+'</div>'
+        +   '<div class="fcol">'
+        +     '<div class="fname">'+f.name+'</div>'
+        +     '<div class="furl" title="'+f.url+'">'+f.url+'</div>'
+        +   '</div>'
+        +   '<button class="copy" onclick="downloadFile(\''+f.type+'\',\''+f.url+'\')">下载</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  function openSheet(){ renderFiles(); document.getElementById('mask').classList.add('show'); document.getElementById('sheet').classList.add('show'); }
+  function closeSheet(){ document.getElementById('mask').classList.remove('show'); document.getElementById('sheet').classList.remove('show'); }
+
+  function downloadFile(type, url){
+    // 原型模拟保存：真实小程序用 wx.saveImageToPhotosAlbum / wx.saveVideoToPhotosAlbum
+    if(type === 'video' || type === 'image'){
+      toast('已保存到手机相册中');
+    } else {
+      toast('文件已保存至手机');
+    }
+  }
+
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+  }
+
+  function playVideo(){ toast('（原型）开始播放课程视频'); }
+</script>
+</body>
+</html>
