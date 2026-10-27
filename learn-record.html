@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>掌狐后台 · 商学院 · 学习记录</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+       background:#f5f6f8;color:#1f2329;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .box{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:36px 40px;max-width:480px;width:100%;text-align:center}
+  .logo{width:52px;height:52px;margin:0 auto 16px;border-radius:12px;background:linear-gradient(135deg,#00b3a4,#0ea5e9);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700}
+  h1{font-size:19px;font-weight:600;margin-bottom:8px}
+  p{font-size:13px;color:#6b7280;line-height:1.7}
+  .btn{display:inline-block;margin-top:22px;padding:11px 30px;background:#00b3a4;color:#fff;border-radius:8px;
+       text-decoration:none;font-size:14px;font-weight:500;transition:.2s}
+  .btn:hover{background:#009688}
+  .hint{margin-top:14px;padding-top:12px;border-top:1px dashed #e8e8e8;font-size:12px;color:#9ca3af}
+  .back{margin-top:10px;font-size:12px}
+  .back a{color:#6b7280;text-decoration:none}
+  .back a:hover{color:#00b3a4}
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="logo">学</div>
+    <h1>掌狐后台 · 商学院 · 学习记录</h1>
+    <p>正在进入学习记录页面<br>如未自动跳转，请点击下方按钮</p>
+    <a class="btn" href="admin/index.html#learnRecord">进入学习记录</a>
+    <div class="hint">导航路线：客户后台 → 商学院 → 学习记录</div>
+    <div class="back"><a href="index.html">← 返回原型总目录</a></div>
+  </div>
+  <script>
+    setTimeout(function(){ location.href = 'admin/index.html#learnRecord'; }, 700);
+  </script>
+</body>
+</html>

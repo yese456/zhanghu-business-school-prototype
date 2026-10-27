@@ -45,6 +45,12 @@ body{
   color:var(--sub);white-space:pre-wrap;word-break:break-all;
 }
 .foot{margin-top:24px;text-align:center;font-size:12px;color:var(--sub);line-height:1.8}
+.quick{display:flex;flex-wrap:wrap;gap:10px}
+.quick a{
+  font-size:13px;padding:7px 14px;border:1px solid var(--line);border-radius:20px;
+  text-decoration:none;color:var(--sub);background:#fafbfc;transition:.15s;
+}
+.quick a:hover{border-color:transparent;background:var(--blue);color:#fff}
 </style>
 </head>
 <body>
@@ -75,6 +81,17 @@ body{
       </div>
       <div class="meta">完整后台系统 · 建议电脑全屏浏览</div>
     </a>
+  </div>
+
+  <div class="flow">
+    <h3>快捷直达</h3>
+    <div class="quick">
+      <a href="learn-record.html">后台 · 学习记录</a>
+      <a href="admin/index.html#bsCourse">后台 · 课程管理</a>
+      <a href="admin/index.html#bsRecommend">后台 · 推荐位管理</a>
+      <a href="admin/index.html#learnCorner">后台 · 学习园地</a>
+      <a href="mp/course-admin-home.html">小程序 · 商学院首页</a>
+    </div>
   </div>
 
   <div class="flow">
